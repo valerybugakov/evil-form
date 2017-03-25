@@ -1,0 +1,36 @@
+{
+  "plugins": [
+    'styled-components',
+    "syntax-dynamic-import",
+    // 'transform-es2015-spread',
+    // ['transform-object-rest-spread', {
+    //   useBuiltIns: true,
+    // }],
+    // ['transform-class-properties', {
+    //   spec: true,
+    // }],
+  ],
+  "presets": [
+    ["latest", { "es2015": { "modules": false } }],
+    "stage-0",
+    "react",
+  ],
+  "env": {
+    "production": {
+      "only": [
+        "app",
+      ],
+      "plugins": [
+        "transform-react-remove-prop-types",
+        "transform-react-constant-elements",
+        "transform-react-inline-elements",
+      ],
+    },
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "dynamic-import-node",
+      ],
+    },
+  }
+}
