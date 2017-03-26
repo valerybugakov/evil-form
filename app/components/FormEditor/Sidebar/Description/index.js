@@ -16,4 +16,7 @@ const Description = () => (
   />
 )
 
-export default reduxForm({ form: 'formBuilder' })(Description)
+export default reduxForm({
+  form: 'formBuilder',
+  destroyOnUnmount: false,
+})(Description)

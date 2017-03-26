@@ -9,7 +9,7 @@ module.exports = options => ({
   }, options.output),
   module: {
     loaders: [{
-      test: /\.js$/, // Transform all .js files required somewhere with Babel
+      test: /\.js$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
       query: options.babelQuery,
@@ -18,8 +18,14 @@ module.exports = options => ({
       include: /node_modules/,
       loaders: ['style-loader', 'css-loader'],
     }, {
-      test: /\.(eot|svg|ttf|woff|woff2)$/,
+      test: /\.(eot|ttf|woff|woff2)$/,
       loader: 'file-loader',
+    }, {
+      test: /\.svg?$/,
+      loaders: [
+        'svg-sprite-loader',
+        'svgo-loader',
+      ],
     }, {
       test: /\.(jpg|png|gif)$/,
       loaders: [

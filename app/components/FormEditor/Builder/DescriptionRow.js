@@ -5,6 +5,7 @@ import { formBuilderSelector } from 'redux/form/selectors'
 import { COLORS } from 'styles'
 
 const Container = styled.div`
+  margin-bottom: 21px;
   color: ${COLORS.PRIMARY};
   font-size: 9.9px;
   padding-bottom: 22.9px;

@@ -23,7 +23,7 @@ const Field = styled.div`
   }
 `
 
-const FieldType = ({ label, handleClick }) => (
+const FieldItem = ({ label, handleClick }) => (
   <Field onClick={handleClick}>
     {label}
   </Field>
@@ -35,4 +35,4 @@ export default assemble(
       dispatch(arrayPush('formBuilder', 'fields', { type }))
     ),
   })
-)(FieldType)
+)(FieldItem)

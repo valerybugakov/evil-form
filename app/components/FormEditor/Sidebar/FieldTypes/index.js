@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { fieldTypes } from 'redux/constants'
-import FieldItem from './FieldItem'
+import FieldType from './FieldType'
 
 const FieldList = styled.div`
   display: flex;
@@ -9,11 +9,11 @@ const FieldList = styled.div`
   justify-content: space-between;
 `
 
-const Fields = () => (
+const FieldTypes = () => (
   <FieldList>
     {
       fieldTypes.map(config => (
-        <FieldItem
+        <FieldType
           key={config.type}
           {...config}
         />
@@ -22,4 +22,4 @@ const Fields = () => (
   </FieldList>
 )
 
-export default Fields
+export default FieldTypes

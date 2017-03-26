@@ -2,6 +2,7 @@
   "plugins": [
     'styled-components',
     "syntax-dynamic-import",
+    "transform-decorators-legacy",
     // 'transform-es2015-spread',
     // ['transform-object-rest-spread', {
     //   useBuiltIns: true,

@@ -4,7 +4,31 @@ import actions from './actions'
 
 const initialState = {
   values: {
+    title: 'San Francisco Driver Form',
     description: 'Welcome aboard!',
+    fields: [
+      {
+        type: 'text',
+        title: 'SSN *',
+      },
+      {
+        type: 'radio',
+        title: 'Have you driven a car before?',
+      },
+      {
+        type: 'checkbox',
+        title: 'Where do you want to work?',
+      },
+      {
+        type: 'select',
+      },
+      {
+        type: 'file',
+      },
+      {
+        type: 'textarea',
+      },
+    ],
   },
 }
 

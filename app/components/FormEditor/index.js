@@ -16,7 +16,7 @@ const EditorContainer = styled.div`
 const FormEditor = () => (
   <EditorContainer className="row">
     <Sidebar className="col-xs-12 col-sm-12 col-md-4" />
-    <Builder className="col-sm-12 col-md-8" />
+    <Builder className="col-xs-12 col-sm-12 col-md-8" />
   </EditorContainer>
 )
 

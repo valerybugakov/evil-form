@@ -13,6 +13,10 @@ import 'file-loader?name=[name].[ext]!./.htaccess'
 import store from 'redux/store'
 import Root from 'components/Root'
 
+// Create svg sprite
+const svgs = require.context('../static/svg', false, /.*\.svg$/)
+svgs.keys().forEach(svgs)
+
 const render = () => {
   ReactDOM.render(
     <Root store={store} />,

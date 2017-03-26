@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { centerContentFlex, COLORS } from 'styles'
 import Tabs, { TabContent } from './MaterialTabs'
-import Fields from './Fields'
+import FieldTypes from './FieldTypes'
 import Description from './Description'
 
 const tabLabels = ['Custom Fields', 'Description (Optional)']
@@ -22,9 +22,10 @@ const Header = styled.h1`
   background-color: ${COLORS.BORDER};
 `
 const TabContainer = styled(Tabs)`
-  padding-bottom: 35px;
+  padding-bottom: 25px;
 
   & > div:last-child {
+    min-height: 215px;
     margin: 0 50px;
   }
 `
@@ -39,7 +40,7 @@ const Sidebar = ({ className }) => (
         title="Add Custom Field"
         description="Select fields which will be added to the form."
       >
-        <Fields />
+        <FieldTypes />
       </TabContent>
       <TabContent
         title="Form Description"

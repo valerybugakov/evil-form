@@ -1,12 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import { reduxForm } from 'redux-form'
+import { reduxForm, FieldArray, arrayMove } from 'redux-form'
+import { dispatch } from 'redux/store'
+import { media } from 'helpers/styles'
 import { COLORS } from 'styles'
 import DescriptionRow from './DescriptionRow'
+import FieldList from './FieldList'
 
 const FormContainer = styled.div`
   margin: 0;
   padding: 54px 50px 0 50px;
+
+  ${media.mediumUp`
+    padding: 15px 0 0 0;
+  `}
 `
 const Form = styled.form`
   height: 100%;
@@ -43,14 +50,17 @@ const SaveButton = styled.button`
   }
 `
 
-const Builder = ({
-  className,
-  handleSubmit,
-  // pristine,
-  // submitting,
-  // error,
-  // invalid,
-}) => (
+const shouldCancelStart = ({ target }) => (
+  ![...target.classList].includes('draggable')
+)
+
+const onSortEnd = ({ oldIndex, newIndex }) => {
+  if (oldIndex !== newIndex) {
+    dispatch(arrayMove('formBuilder', 'fields', oldIndex, newIndex))
+  }
+}
+
+const Builder = ({ handleSubmit, className }) => (
   <FormContainer className={className}>
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
@@ -58,11 +68,17 @@ const Builder = ({
         <SaveButton type="submit">Save form</SaveButton>
       </HeadingRow>
       <DescriptionRow />
+      <FieldArray
+        name="fields"
+        component={FieldList}
+        onSortEnd={onSortEnd}
+        shouldCancelStart={shouldCancelStart}
+      />
     </Form>
   </FormContainer>
 )
 
 export default reduxForm({
   form: 'formBuilder',
-  onSubmit: values => console.log(values),
+  onSubmit: values => console.log(values), // eslint-disable-line
 })(Builder)

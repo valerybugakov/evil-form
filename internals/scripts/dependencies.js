@@ -24,7 +24,6 @@ const dllManifestPath = path.join(outputPath, 'package.json')
  * it isn't going to be version controlled and babel wont try to parse it.
  */
 mkdir('-p', outputPath)
-
 echo('Building the Webpack DLL...')
 
 /**
