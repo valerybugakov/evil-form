@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { compose, lifecycle } from 'recompose'
 import { SortableContainer } from 'react-sortable-hoc'
 import { COLORS } from 'styles'
 import FieldEditor, { dragColumnMargin } from './FieldEditor'
@@ -46,4 +47,11 @@ const FieldList = ({
   </div>
 )
 
-export default SortableContainer(FieldList)
+export default compose(
+  lifecycle({
+    shouldComponentUpdate(nextProps) {
+      return this.props.fields.length !== nextProps.fields.length
+    },
+  }),
+  SortableContainer,
+)(FieldList)

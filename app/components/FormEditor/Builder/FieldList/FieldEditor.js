@@ -2,7 +2,7 @@ import React from 'react'
 import { Field } from 'redux-form'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, lifecycle } from 'recompose'
 import { SortableElement } from 'react-sortable-hoc'
 import { formBuilderSelector } from 'redux/form/selectors'
 // import { getInputConfig, builderIdOptions } from 'redux/helpers'
@@ -80,15 +80,17 @@ const FieldEditor = ({
         component="input"
         name={`${input}.required`}
       />
-      <DeleteButton
-        icon="delete"
-        onClick={handleRemoveClick}
-      />
+      <DeleteButton onClick={handleRemoveClick}>
+        Remove
+      </DeleteButton>
     </Container>
   )
 }
 
 export default compose(
+  lifecycle({
+    shouldComponentUpdate() { return false },
+  }),
   withHandlers({
     handleRemoveClick: ({ fields, index }) => _ => fields.remove(index),
   }),
