@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
-import { media } from 'styles'
+import { media, COLORS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
@@ -43,7 +43,11 @@ const SaveButton = styled.button`
   &:hover {
     color: #fff;
     border-width: 0;
-    background-image: radial-gradient(circle at 50% 51%, #9aa5ec, #7d88d4);
+    background-image: radial-gradient(
+      circle at 50% 51%,
+      #9aa5ec,
+      ${COLORS.HIGHLIGHTED}
+    );
   }
 `
 

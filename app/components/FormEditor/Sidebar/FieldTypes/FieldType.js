@@ -3,19 +3,23 @@ import styled from 'styled-components'
 import { arrayPush } from 'redux-form'
 import { assemble, withHandlers } from 'reassemble'
 import { dispatch } from 'redux/store'
-import { centerContentFlex, COLORS } from 'styles'
+import { COLORS } from 'styles'
 
-const Field = styled.div`
-  ${centerContentFlex}
-  flex-basis: calc(50% - 10px);
+const Field = styled.button`
+  display: inline-block;
+  width: calc(50% - 10px);
   height: 26.9px;
-  margin-bottom: 18.3px;
+  margin: 0 10px 18.3px 0;
+  cursor: pointer;
   font-size: 10px;
   color: ${COLORS.SECONDARY};
   background-color: #ffffff;
   border-radius: 4px;
   border: solid 1px #f2f2f2;
-  cursor: pointer;
+
+  &:nth-child(2n) {
+    margin: 0 0 18.3px 10px;
+  }
 
   &:hover {
     color: ${COLORS.HIGHLIGHTED};

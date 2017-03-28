@@ -1,16 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
 import { fieldTypes } from 'redux/constants'
 import FieldType from './FieldType'
 
-const FieldList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`
-
 const FieldTypes = () => (
-  <FieldList>
+  <div>
     {
       fieldTypes.map(config => (
         <FieldType
@@ -19,7 +12,7 @@ const FieldTypes = () => (
         />
       ))
     }
-  </FieldList>
+  </div>
 )
 
 export default FieldTypes

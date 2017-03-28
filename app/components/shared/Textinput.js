@@ -54,7 +54,6 @@ const Textinput = ({
     return (
       <InputWrapper className={className}>
         <Input
-          tabIndex="0"
           autoFocus
           {...input}
           onBlur={handleBlur}
