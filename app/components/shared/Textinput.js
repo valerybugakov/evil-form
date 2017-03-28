@@ -32,9 +32,13 @@ const EditIcon = styled(Icon)`
   margin-left: 8px;
   cursor: pointer;
 `
-const RequiredMark = styled.span`
-  color: #ff0000;
-  margin-left: 4px;
+const InputValue = styled.span`
+  &:after {
+    display: ${props => props.required ? 'inline' : 'none'};
+    content: '*';
+    color: #ff0000;
+    margin-left: 4px;
+  }
 `
 
 const Textinput = ({
@@ -62,8 +66,9 @@ const Textinput = ({
 
   return (
     <div onFocus={handleEditClick} className={className}>
-      <span>{input.value}</span>
-      {required && <RequiredMark>*</RequiredMark>}
+      <InputValue required={required}>
+        {input.value}
+      </InputValue>
       <EditIcon
         width="8"
         height="12"

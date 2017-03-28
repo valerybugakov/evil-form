@@ -69,6 +69,7 @@ const FieldEditor = ({
       </ResponsiveCell>
       <ResponsiveCell widthPercentage="10">
         <RequiredField
+          type="checkbox"
           component={Checkbox}
           name={`${input}.required`}
         />
