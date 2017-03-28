@@ -1,4 +1,5 @@
 import { injectGlobal } from 'styled-components'
+import { COLORS } from './theme'
 
 /* eslint no-unused-expressions: 0, max-len: 0 */
 injectGlobal`
@@ -17,6 +18,7 @@ injectGlobal`
     flex-direction: column;
     min-height: 100%;
     min-width: 100%;
+    color: ${COLORS.PRIMARY};
     background-color: #fafafa;
   }
 `

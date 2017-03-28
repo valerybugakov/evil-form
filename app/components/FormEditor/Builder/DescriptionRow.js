@@ -6,14 +6,13 @@ import { COLORS } from 'styles'
 
 const Container = styled.div`
   margin-bottom: 21px;
-  color: ${COLORS.PRIMARY};
   font-size: 9.9px;
   padding-bottom: 22.9px;
   border-bottom: 1px solid ${COLORS.BORDER};
 `
 const Label = styled.span`
   color: ${COLORS.INACTIVE};
-  margin-right: 0.6px;
+  margin-right: 2px;
 `
 
 const DescriptionRow = ({ description }) => (

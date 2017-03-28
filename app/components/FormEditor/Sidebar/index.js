@@ -18,7 +18,6 @@ const Header = styled.h1`
   height: 54.3px;
   font-size: 15px;
   font-weight: normal;
-  color: ${COLORS.PRIMARY};
   background-color: ${COLORS.BORDER};
 `
 const TabContainer = styled(Tabs)`

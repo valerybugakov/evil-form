@@ -3,12 +3,10 @@ import styled from 'styled-components'
 import { reduxForm, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
 import { media } from 'helpers/styles'
-import { COLORS } from 'styles'
 import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
 
-const FormContainer = styled.div`
-  margin: 0;
+const FormContainer = styled.main`
   padding: 54px 50px 0 50px;
 
   ${media.mediumUp`
@@ -24,7 +22,6 @@ const Title = styled.h1`
   margin: 0;
   font-size: 15px;
   font-weight: normal;
-  color: ${COLORS.PRIMARY};
 `
 const HeadingRow = styled.div`
   display: flex;
@@ -36,7 +33,6 @@ const SaveButton = styled.button`
   width: 100px;
   height: 26.9px;
   color: #bec4ea;
-  outline: none;
   cursor: pointer;
   font-size: 10px;
   border-radius: 4px;
@@ -51,7 +47,7 @@ const SaveButton = styled.button`
 `
 
 const shouldCancelStart = ({ target }) => (
-  ![...target.classList].includes('draggable')
+  ![...target.parentNode.classList].includes('draggable')
 )
 
 const onSortEnd = ({ oldIndex, newIndex }) => {

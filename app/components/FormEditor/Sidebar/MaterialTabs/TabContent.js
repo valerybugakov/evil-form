@@ -13,7 +13,6 @@ const Description = styled.h5`
 const Title = styled.h3`
   font-size: 15px;
   font-weight: normal;
-  color: ${COLORS.PRIMARY};
 `
 
 const TabContent = ({ children, className, description, title }) => (

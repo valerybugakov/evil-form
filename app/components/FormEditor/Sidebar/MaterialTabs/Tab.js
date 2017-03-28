@@ -22,9 +22,17 @@ const StyledTab = styled.div`
 `
 
 class TabItem extends Component {
+  getTabRef = ref => this.ref = ref
+
   handleClick = _ => {
     const { index, setTab } = this.props
     setTab(index)
+  }
+
+  handleFocusKeyUp = e => {
+    if (e.keyCode === 32 && document.activeElement === this.ref) {
+      this.handleClick()
+    }
   }
 
   render() {
@@ -32,9 +40,12 @@ class TabItem extends Component {
 
     return (
       <StyledTab
+        tabIndex="0"
         active={active}
         tabsNumber={tabsNumber}
+        innerRef={this.getTabRef}
         onClick={this.handleClick}
+        onKeyUp={this.handleFocusKeyUp}
       >
         {label}
       </StyledTab>

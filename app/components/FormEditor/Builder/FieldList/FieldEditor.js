@@ -5,30 +5,43 @@ import styled from 'styled-components'
 import { compose, withHandlers, lifecycle } from 'recompose'
 import { SortableElement } from 'react-sortable-hoc'
 import { formBuilderSelector } from 'redux/form/selectors'
-// import { getInputConfig, builderIdOptions } from 'redux/helpers'
-// import draggable from 'assets/svg/draggable.svg'
+import { COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 import Textinput from 'components/shared/Textinput'
+import Checkbox from 'components/shared/Checkbox'
 
-export const dragColumnMargin = 14
-
-const Container = styled.div`
-  display: flex;
-  margin-bottom: 16.3px;
-`
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  height: 24px;
+const TableRow = styled.tr`
+  & > td {
+    padding-bottom: 16.3px;
+    font-size: 10px;
+  }
 `
 const DragIcon = styled(Icon)`
-  margin-right: ${dragColumnMargin}px;
+  display: block;
+  width: 26px;
+`
+const ResponsiveCell = styled.td`
+  width: ${props => props.widthPercentage}%;
+`
+const TitleInput = styled(Field)`
+  display: flex;
+  align-items: center;
+  width: 95%;
+  font-size: 11.3px;
+`
+const RequiredField = styled(Field)`
+  margin-top: 1px;
 `
 const DeleteButton = styled.button`
-  min-width: 0 !important;
-`
-const Choices = styled.div`
+  width: 39px;
+  border: none;
+  padding: 0;
+  color: ${COLORS.REMOVE};
+  cursor: pointer;
 
+  &:hover {
+    color: #ff5e7a;
+  }
 `
 
 const FieldEditor = ({
@@ -38,52 +51,40 @@ const FieldEditor = ({
   handleRemoveClick,
 }) => {
   console.log('delete me')
-  // const inputConfig = getInputConfig(inputType)
-
-  // return null and fix sortableItem error
-  // if (!inputConfig) return null
-
-  // const {
-  //   EditComponent,
-  //   label,
-  //   branched,
-  //   terminal,
-  //   validatable,
-  // } = inputConfig
-
-      // <EditComponent
-      //   input={input}
-      //   inputType={fieldType}
-      // />
 
   return (
-    <Container className={className}>
-      <DragIcon
-        width="12"
-        height="24"
-        name="draggable"
-        className="draggable"
-      />
-      <Title>
-        <Field
+    <TableRow className={className}>
+      <td>
+        <DragIcon
+          width="12"
+          height="24"
+          name="draggable"
+          className="draggable"
+        />
+      </td>
+      <ResponsiveCell widthPercentage="65">
+        <TitleInput
           type="text"
           component={Textinput}
           placeholder="Question Title"
           name={`${input}.title`}
         />
-      </Title>
-      <Choices>
+      </ResponsiveCell>
+      <ResponsiveCell widthPercentage="25">
         {fieldType}
-      </Choices>
-      <Field
-        type="checkbox"
-        component="input"
-        name={`${input}.required`}
-      />
-      <DeleteButton onClick={handleRemoveClick}>
-        Remove
-      </DeleteButton>
-    </Container>
+      </ResponsiveCell>
+      <ResponsiveCell widthPercentage="10">
+        <RequiredField
+          component={Checkbox}
+          name={`${input}.required`}
+        />
+      </ResponsiveCell>
+      <td>
+        <DeleteButton onClick={handleRemoveClick}>
+          Remove
+        </DeleteButton>
+      </td>
+    </TableRow>
   )
 }
 

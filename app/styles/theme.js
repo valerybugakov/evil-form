@@ -5,4 +5,5 @@ export const COLORS = {
   HIGHLIGHTED_DISABLED: '#bec4ea',
   INACTIVE: '#bfbfbf',
   BORDER: '#e5e5e5',
+  REMOVE: '#ff8ca0',
 }
