@@ -22,10 +22,7 @@ module.exports = options => ({
       loader: 'file-loader',
     }, {
       test: /\.svg?$/,
-      loaders: [
-        'svg-sprite-loader',
-        'svgo-loader',
-      ],
+      loader: 'svg-sprite-loader',
     }, {
       test: /\.(jpg|png|gif)$/,
       loaders: [

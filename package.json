@@ -33,10 +33,12 @@
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "svgo": "./node_modules/svgo/bin/svgo -f ./app/assets/svg | echo"
   },
   "lint-staged": {
-    "*.js": "lint:eslint"
+    "*.js": "lint:eslint",
+    "*.svg": "svgo"
   },
   "pre-commit": "lint:staged",
   "dllPlugin": {
@@ -161,7 +163,6 @@
     "shelljs": "^0.7.7",
     "style-loader": "^0.16.0",
     "svg-sprite-loader": "^0.3.0",
-    "svgo-loader": "^1.2.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.3.1",
     "webpack-dev-middleware": "^1.10.1",

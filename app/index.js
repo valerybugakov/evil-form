@@ -6,7 +6,6 @@ import 'sanitize.css/sanitize.css'
 import 'flexboxgrid'
 import 'styles/global'
 /* eslint-disable import/no-unresolved, import/extensions */
-import '!file-loader?name=[name].[ext]!../static/favicon.ico'
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name].[ext]!./.htaccess'
 /* eslint-enable import/no-unresolved, import/extensions */
@@ -14,7 +13,7 @@ import store from 'redux/store'
 import Root from 'components/Root'
 
 // Create svg sprite
-const svgs = require.context('../static/svg', false, /.*\.svg$/)
+const svgs = require.context('assets/svg', false, /.*\.svg$/)
 svgs.keys().forEach(svgs)
 
 const render = () => {
