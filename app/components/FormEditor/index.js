@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { media } from 'helpers/styles'
+import { media } from 'styles'
 import Sidebar from './Sidebar'
 import Builder from './Builder'
 

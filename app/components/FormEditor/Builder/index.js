@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { reduxForm, FieldArray, arrayMove } from 'redux-form'
+import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
-import { media } from 'helpers/styles'
+import { media } from 'styles'
+import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
 
@@ -18,8 +19,8 @@ const Form = styled.form`
   padding: 13px 50px;
   background: #fff;
 `
-const Title = styled.h1`
-  margin: 0;
+const TitleField = styled(Field)`
+  width: 80%;
   font-size: 15px;
   font-weight: normal;
 `
@@ -60,7 +61,11 @@ const Builder = ({ handleSubmit, className }) => (
   <FormContainer className={className}>
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
-        <Title>Title</Title>
+        <TitleField
+          required
+          name="title"
+          component={Textinput}
+        />
         <SaveButton type="submit">Save form</SaveButton>
       </HeadingRow>
       <DescriptionRow />

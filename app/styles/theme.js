@@ -7,3 +7,11 @@ export const COLORS = {
   BORDER: '#e5e5e5',
   REMOVE: '#ff8ca0',
 }
+
+export const screenSizes = {
+  largeUp: 1200,
+  mediumUp: 1024,
+  smallUp: 768,
+  smallOnly: 376,
+}
+

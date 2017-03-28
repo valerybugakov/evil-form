@@ -1,7 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { formBuilderSelector } from 'redux/form/selectors'
+import { injectBuilderValues } from 'redux/utils'
 import { COLORS } from 'styles'
 
 const Container = styled.div`
@@ -22,6 +21,6 @@ const DescriptionRow = ({ description }) => (
   </Container>
 )
 
-export default connect(state => ({
-  description: formBuilderSelector(state, 'description'),
-}))(DescriptionRow)
+export default injectBuilderValues({
+  description: 'description',
+})(DescriptionRow)

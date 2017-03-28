@@ -1,10 +1,9 @@
 import React from 'react'
 import { Field } from 'redux-form'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { compose, withHandlers, lifecycle } from 'recompose'
 import { SortableElement } from 'react-sortable-hoc'
-import { formBuilderSelector } from 'redux/form/selectors'
+import { injectBuilderValues } from 'redux/utils'
 import { COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 import Textinput from 'components/shared/Textinput'
@@ -90,10 +89,8 @@ export default compose(
   withHandlers({
     handleRemoveClick: ({ fields, index }) => _ => fields.remove(index),
   }),
-  connect(
-    (state, { input }) => ({
-      fieldType: formBuilderSelector(state, `${input}.type`),
-    }),
-  ),
+  injectBuilderValues(({ input }) => ({
+    fieldType: `${input}.type`,
+  })),
   SortableElement,
 )(FieldEditor)

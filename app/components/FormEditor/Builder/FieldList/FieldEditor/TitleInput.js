@@ -1,7 +1,6 @@
 import { Field } from 'redux-form'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { formBuilderSelector } from 'redux/form/selectors'
+import { injectBuilderValues } from 'redux/utils'
 
 const TitleField = styled(Field)`
   display: flex;
@@ -10,6 +9,6 @@ const TitleField = styled(Field)`
   font-size: 11.3px;
 `
 
-export default connect((state, { inputPath }) => ({
-  required: formBuilderSelector(state, `${inputPath}.required`),
+export default injectBuilderValues(({ inputPath }) => ({
+  required: `${inputPath}.required`,
 }))(TitleField)

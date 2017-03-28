@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { centerContentFlex, COLORS } from 'styles'
+import { injectBuilderValues } from 'redux/utils'
 import Tabs, { TabContent } from './MaterialTabs'
 import FieldTypes from './FieldTypes'
 import Description from './Description'
@@ -29,11 +30,9 @@ const TabContainer = styled(Tabs)`
   }
 `
 
-const Sidebar = ({ className }) => (
+const Sidebar = ({ className, formTitle }) => (
   <SidebarContainer className={className}>
-    <Header>
-      San Francisco Driver Form
-    </Header>
+    <Header>{formTitle}</Header>
     <TabContainer labels={tabLabels}>
       <TabContent
         title="Add Custom Field"
@@ -51,4 +50,6 @@ const Sidebar = ({ className }) => (
   </SidebarContainer>
 )
 
-export default Sidebar
+export default injectBuilderValues({
+  formTitle: 'title',
+})(Sidebar)
