@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { centerContentFlex, COLORS } from 'styles'
+import { COLORS } from 'styles'
 import { injectBuilderValues } from 'redux/utils'
 import Tabs, { TabContent } from './MaterialTabs'
 import FieldTypes from './FieldTypes'
@@ -14,11 +14,12 @@ const SidebarContainer = styled.aside`
   border: solid 1px ${COLORS.BORDER};
 `
 const Header = styled.h1`
-  ${centerContentFlex}
   margin: 0;
-  height: 54.3px;
+  padding: 18px 25px;
+  min-height: 54.3px;
   font-size: 15px;
   font-weight: normal;
+  text-align: center;
   background-color: ${COLORS.BORDER};
 `
 const TabContainer = styled(Tabs)`

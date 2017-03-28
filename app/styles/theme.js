@@ -9,7 +9,8 @@ export const COLORS = {
 }
 
 export const screenSizes = {
-  largeUp: 1200,
+  wideUp: 1920,
+  largeUp: 1280,
   mediumUp: 1024,
   smallUp: 768,
   smallOnly: 376,

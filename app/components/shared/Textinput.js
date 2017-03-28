@@ -28,11 +28,16 @@ const Input = styled.input`
   appearance: none;
 `
 const EditIcon = styled(Icon)`
-  margin-top: 1px;
   margin-left: 8px;
   cursor: pointer;
 `
 const InputValue = styled.span`
+  /*
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  */
+
   &:after {
     display: ${props => props.required ? 'inline' : 'none'};
     content: '*';
@@ -88,7 +93,7 @@ export default compose(
   withState('inEditMode', 'setEditMode', false),
   withHandlers({
     handleInputKeyUp: ({ input, setEditMode }) => e => {
-      if (e.keyCode === 27) {
+      if (e.keyCode === 27 || e.keyCode === 13) { // handle Esc and Enter keys
         exitEditMode(input, setEditMode, e)
       }
     },

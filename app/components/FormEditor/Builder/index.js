@@ -61,15 +61,17 @@ const onSortEnd = ({ oldIndex, newIndex }) => {
   }
 }
 
+const preventSubmitOnEnter = e => {
+  if (e.keyCode === 13) {
+    e.preventDefault()
+  }
+}
+
 const Builder = ({ handleSubmit, className }) => (
-  <FormContainer className={className}>
+  <FormContainer className={className} onKeyDown={preventSubmitOnEnter}>
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
-        <TitleField
-          required
-          name="title"
-          component={Textinput}
-        />
+        <TitleField name="title" component={Textinput} />
         <SaveButton type="submit">Save form</SaveButton>
       </HeadingRow>
       <DescriptionRow />

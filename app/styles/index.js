@@ -5,7 +5,7 @@ export const media = Object.keys(screenSizes).reduce((acc, label) => {
   const emSize = screenSizes[label] / 16
 
   acc[label] = (...args) => css`
-    @media (max-width: ${emSize}em) {
+    @media only screen and (max-width: ${emSize}em) {
       ${css(...args)}
     }
   `
