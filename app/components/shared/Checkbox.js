@@ -49,9 +49,9 @@ const Label = styled.label`
   }
 `
 
-const Checkbox = ({ className, ...rest }) => (
+const Checkbox = ({ className, input }) => (
   <Label className={className} role="button">
-    <HiddenInput type="checkbox" {...rest} />
+    <HiddenInput type="checkbox" {...input} />
     <CheckIcon name="checkmark" width="8" height="6" />
   </Label>
 )

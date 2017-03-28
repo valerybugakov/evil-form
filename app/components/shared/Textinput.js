@@ -32,13 +32,19 @@ const EditIcon = styled(Icon)`
   margin-left: 8px;
   cursor: pointer;
 `
+const RequiredMark = styled.span`
+  color: #ff0000;
+  margin-left: 4px;
+`
 
 const Textinput = ({
   input,
+  required,
   className,
   inEditMode,
   handleBlur,
   handleEditClick,
+  handleInputKeyUp,
 }) => {
   if (inEditMode) {
     return (
@@ -48,6 +54,7 @@ const Textinput = ({
           autoFocus
           {...input}
           onBlur={handleBlur}
+          onKeyUp={handleInputKeyUp}
         />
       </InputWrapper>
     )
@@ -56,6 +63,7 @@ const Textinput = ({
   return (
     <div onFocus={handleEditClick} className={className}>
       <span>{input.value}</span>
+      {required && <RequiredMark>*</RequiredMark>}
       <EditIcon
         width="8"
         height="12"
@@ -67,12 +75,21 @@ const Textinput = ({
   )
 }
 
+const exitEditMode = (input, setEditMode, e) => {
+  input.onBlur(e.target.value)
+  setEditMode(false)
+}
+
 export default compose(
   withState('inEditMode', 'setEditMode', false),
   withHandlers({
+    handleInputKeyUp: ({ input, setEditMode }) => e => {
+      if (e.keyCode === 27) {
+        exitEditMode(input, setEditMode, e)
+      }
+    },
     handleBlur: ({ input, setEditMode }) => e => {
-      input.onBlur(e.target.value)
-      setEditMode(false)
+      exitEditMode(input, setEditMode, e)
     },
     handleEditClick: ({ setEditMode }) => _ => setEditMode(true),
   }),

@@ -9,6 +9,7 @@ import { COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 import Textinput from 'components/shared/Textinput'
 import Checkbox from 'components/shared/Checkbox'
+import TitleInput from './TitleInput'
 
 const TableRow = styled.tr`
   & > td {
@@ -22,12 +23,6 @@ const DragIcon = styled(Icon)`
 `
 const ResponsiveCell = styled.td`
   width: ${props => props.widthPercentage}%;
-`
-const TitleInput = styled(Field)`
-  display: flex;
-  align-items: center;
-  width: 95%;
-  font-size: 11.3px;
 `
 const RequiredField = styled(Field)`
   margin-top: 1px;
@@ -64,9 +59,8 @@ const FieldEditor = ({
       </td>
       <ResponsiveCell widthPercentage="65">
         <TitleInput
-          type="text"
+          inputPath={input}
           component={Textinput}
-          placeholder="Question Title"
           name={`${input}.title`}
         />
       </ResponsiveCell>

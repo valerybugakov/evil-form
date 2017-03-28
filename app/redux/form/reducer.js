@@ -9,7 +9,8 @@ const initialState = {
     fields: [
       {
         type: 'text',
-        title: 'SSN *',
+        title: 'SSN',
+        required: true,
       },
       {
         type: 'radio',
