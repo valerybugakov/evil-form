@@ -44,7 +44,7 @@ const ColumnTitle = styled.th`
     }
   }
 
-  ${media.smallOnly`
+  ${media.smallUp`
     &:nth-child(2) {
       width: 45%;
     }

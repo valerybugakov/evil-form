@@ -14,19 +14,15 @@ import TitleInput from './TitleInput'
 
 const TableRow = styled.tr`
   vertical-align: top;
-
-  & > td {
-    padding-bottom: 20.3px;
-    font-size: 10px;
-  }
+`
+const TableCell = styled.td`
+  padding-bottom: 20.3px;
+  font-size: 10px;
 `
 const DragIcon = styled(Icon)`
   display: block;
   width: 26px;
   margin-top: -4px;
-`
-const ResponsiveCell = styled.td`
-  width: ${props => props.widthPercentage}%;
 `
 const RequiredField = styled(Field)`
   margin-top: 1px;
@@ -54,36 +50,36 @@ const FieldEditor = ({
 
   return (
     <TableRow className={className}>
-      <td>
+      <TableCell>
         <DragIcon
           width="12"
           height="24"
           name="draggable"
           className="draggable"
         />
-      </td>
-      <ResponsiveCell widthPercentage="65">
+      </TableCell>
+      <TableCell>
         <TitleInput
           inputPath={input}
           component={Textinput}
           name={`${input}.title`}
         />
-      </ResponsiveCell>
-      <ResponsiveCell widthPercentage="25">
+      </TableCell>
+      <TableCell>
         {Choices ? <Choices /> : fieldType}
-      </ResponsiveCell>
-      <ResponsiveCell widthPercentage="10">
+      </TableCell>
+      <TableCell>
         <RequiredField
           type="checkbox"
           component={Checkbox}
           name={`${input}.required`}
         />
-      </ResponsiveCell>
-      <td>
+      </TableCell>
+      <TableCell>
         <DeleteButton onClick={handleRemoveClick}>
           Remove
         </DeleteButton>
-      </td>
+      </TableCell>
     </TableRow>
   )
 }
