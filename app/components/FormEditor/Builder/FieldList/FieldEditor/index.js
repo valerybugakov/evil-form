@@ -5,7 +5,7 @@ import { capitalize } from 'lodash'
 import { SortableElement } from 'react-sortable-hoc'
 import { compose, withHandlers, lifecycle } from 'recompose'
 import { injectBuilderValues } from 'redux/utils'
-import { COLORS } from 'styles'
+import { buttonReset, media, COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 import Textinput from 'components/shared/Textinput'
 import Checkbox from 'components/shared/Checkbox'
@@ -14,25 +14,56 @@ import TitleInput from './TitleInput'
 
 const TableRow = styled.tr`
   vertical-align: top;
+
+  ${media.phone`
+    position: relative;
+    display: block;
+    margin-bottom: .625em;
+  `}
 `
 const TableCell = styled.td`
   padding-bottom: 20.3px;
   font-size: 10px;
+
+  ${media.phone`
+    display: flex;
+    justify-content: space-between;
+
+    &:before {
+      display: block;
+      content: attr(data-label);
+      text-transform: uppercase;
+    }
+
+    &:first-child {
+      position: absolute;
+      bottom: -2px;
+      transform: rotate(90deg);
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    & input,
+    & > div:last-child {
+      text-align: right;
+    }
+  `}
 `
 const DragIcon = styled(Icon)`
   display: block;
   width: 26px;
   margin-top: -4px;
+  color: #dadada;
 `
 const RequiredField = styled(Field)`
   margin-top: 1px;
 `
 const DeleteButton = styled.button`
+  ${buttonReset}
   width: 39px;
-  border: none;
-  padding: 0;
   color: ${COLORS.REMOVE};
-  cursor: pointer;
 
   &:hover {
     color: #ff5e7a;
@@ -46,7 +77,7 @@ const FieldEditor = ({
   handleRemoveClick,
 }) => {
   console.log('delete me')
-  const Choices = choices[capitalize(fieldType)]
+  const Choices = choices[capitalize(fieldType)] || choices.WithOptions
 
   return (
     <TableRow className={className}>
@@ -58,17 +89,20 @@ const FieldEditor = ({
           className="draggable"
         />
       </TableCell>
-      <TableCell>
+      <TableCell data-label="Title">
         <TitleInput
           inputPath={input}
           component={Textinput}
           name={`${input}.title`}
         />
       </TableCell>
-      <TableCell>
-        {Choices ? <Choices /> : fieldType}
+      <TableCell data-label="Choices">
+        <Choices
+          input={input}
+          type={fieldType}
+        />
       </TableCell>
-      <TableCell>
+      <TableCell data-label="Required?">
         <RequiredField
           type="checkbox"
           component={Checkbox}

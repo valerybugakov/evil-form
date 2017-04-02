@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { map, every, get } from 'lodash/fp'
 import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
 import { media, COLORS } from 'styles'
@@ -18,9 +19,13 @@ const Form = styled.form`
   height: 100%;
   padding: 13px 50px;
   background: #fff;
+
+  ${media.phone`
+    padding: 13px 15px;
+  `}
 `
 const TitleField = styled(Field)`
-  width: 80%;
+  width: calc(100% - 115px);
   font-size: 15px;
   font-weight: normal;
 `
@@ -29,6 +34,19 @@ const HeadingRow = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 21px;
+`
+const ErrorMessage = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 55px;
+  padding: 0 25px;
+  margin-bottom: 22.9px;
+  color: #973133;
+  font-size: 12px;
+  border-radius: 4px;
+  background-color: #f2dede;
+  border: solid 1px #ebcccc;
 `
 const SaveButton = styled.button`
   width: 100px;
@@ -67,14 +85,18 @@ const preventSubmitOnEnter = e => {
   }
 }
 
-const Builder = ({ handleSubmit, className }) => (
+const Builder = ({ handleSubmit, className, error }) => (
   <FormContainer className={className} onKeyDown={preventSubmitOnEnter}>
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
         <TitleField name="title" component={Textinput} />
         <SaveButton type="submit">Save form</SaveButton>
       </HeadingRow>
-      <DescriptionRow />
+      {
+        error
+          ? <ErrorMessage>{error}</ErrorMessage>
+          : <DescriptionRow />
+      }
       <FieldArray
         name="fields"
         component={FieldList}
@@ -85,7 +107,28 @@ const Builder = ({ handleSubmit, className }) => (
   </FormContainer>
 )
 
+const eachWithPositiveLength = every(get('length'))
+// const hasDuplicates = array => new Set(array).size !== array.length
+
 export default reduxForm({
   form: 'formBuilder',
   onSubmit: values => console.log(values), // eslint-disable-line
+  validate: ({ fields }, props) => {
+    console.log(props)
+    const error = {}
+
+    const titles = map(get('title'), fields)
+    const titlesNotEmpty = eachWithPositiveLength(titles)
+    // const titlesUniq = !hasDuplicates(titles)
+
+    // const options = map(get('options'), fields)
+    // const optionsNotEpmty = eachWithPositiveLength(titles)
+    // const optionsUniq = !hasDuplicates(options)
+
+    if (!titlesNotEmpty) {
+      error._error = 'Lol'
+    }
+
+    return error
+  },
 })(Builder)

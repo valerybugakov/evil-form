@@ -13,6 +13,7 @@ export const screenSizes = {
   largeUp: 1280,
   mediumUp: 1024,
   smallUp: 768,
+  phone: 600,
   smallOnly: 376,
 }
 

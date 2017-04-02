@@ -7,8 +7,22 @@ import FieldEditor from './FieldEditor'
 
 const Table = styled.table`
   width: 100%;
-  text-align: left;
+  margin: 0;
+  padding: 0;
   table-layout: fixed;
+  text-align: left;
+`
+const TableHead = styled.thead`
+  ${media.phone`
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  `}
 `
 const ColumnTitle = styled.th`
   font-size: 9.9px;
@@ -51,11 +65,9 @@ const ColumnTitle = styled.th`
   `}
 `
 
-const FieldList = ({
-  fields,
-}) => (
+const FieldList = ({ fields }) => (
   <Table>
-    <tbody>
+    <TableHead>
       <tr>
         <ColumnTitle />
         <ColumnTitle>Question title</ColumnTitle>
@@ -63,6 +75,8 @@ const FieldList = ({
         <ColumnTitle>Required?</ColumnTitle>
         <ColumnTitle />
       </tr>
+    </TableHead>
+    <tbody>
       {
         fields.map((input, index) => (
           <FieldEditor

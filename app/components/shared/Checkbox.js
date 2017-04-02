@@ -15,6 +15,7 @@ const CheckIcon = styled(Icon)`
   width: 12px;
   height: 12px;
   cursor: pointer;
+  color: #7d88d4;
   font-size: 1px;
   line-height: 10px;
   text-align: center;

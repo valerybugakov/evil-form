@@ -1,6 +1,8 @@
 import React from 'react'
+import { FieldArray } from 'redux-form'
 import styled, { css } from 'styled-components'
 import TextareaShared from 'components/shared/Textarea'
+import Options from './Options'
 
 const ChoiceLabel = styled.div`
   width: 116px;
@@ -33,3 +35,10 @@ export const Textarea = () => (
   />
 )
 
+export const WithOptions = ({ input, ...rest }) => (
+  <FieldArray
+    component={Options}
+    name={`${input}.options`}
+    {...rest}
+  />
+)

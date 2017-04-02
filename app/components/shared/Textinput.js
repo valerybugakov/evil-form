@@ -30,6 +30,16 @@ const Input = styled.input`
 const EditIcon = styled(Icon)`
   margin-left: 8px;
   cursor: pointer;
+  color: #828282;
+
+  &:hover {
+    color: ${COLORS.HIGHLIGHTED};
+  }
+`
+const RemoveIcon = EditIcon.extend`
+  &:hover {
+    color: ${COLORS.REMOVE};
+  }
 `
 const InputValue = styled.span`
   /*
@@ -54,6 +64,7 @@ const Textinput = ({
   handleBlur,
   handleEditClick,
   handleInputKeyUp,
+  handleRemoveClick,
 }) => {
   if (inEditMode) {
     return (
@@ -80,6 +91,15 @@ const Textinput = ({
         tabIndex="0"
         onClick={handleEditClick}
       />
+      {
+        handleRemoveClick &&
+        <RemoveIcon
+          width="10"
+          height="12"
+          name="delete"
+          onClick={handleRemoveClick}
+        />
+      }
     </div>
   )
 }
@@ -90,7 +110,7 @@ const exitEditMode = (input, setEditMode, e) => {
 }
 
 export default compose(
-  withState('inEditMode', 'setEditMode', false),
+  withState('inEditMode', 'setEditMode', props => props.inEditMode),
   withHandlers({
     handleInputKeyUp: ({ input, setEditMode }) => e => {
       if (e.keyCode === 27 || e.keyCode === 13) { // handle Esc and Enter keys
