@@ -7,7 +7,7 @@ const TabGroup = styled.div`
   display: flex;
   position: relative;
 `
-const Indicator = styled.div`
+const CurrentTabIndicator = styled.div`
   position: absolute;
   left: 0;
   bottom: -1px;
@@ -47,7 +47,7 @@ class Tabs extends Component {
               />
             ))
           }
-          <Indicator
+          <CurrentTabIndicator
             tabsNumber={labels.length}
             activeTab={activeTab}
           />

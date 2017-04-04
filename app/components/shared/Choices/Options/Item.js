@@ -1,14 +1,19 @@
 import React from 'react'
 import { Field } from 'redux-form'
 import styled from 'styled-components'
-import { withHandlers } from 'recompose'
-import { COLORS } from 'styles'
+import { withFieldRemoveHandler } from 'utils/form'
+import { media, COLORS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 
 const OptionContainer = styled.div`
   display: flex;
   width: 85%;
   margin-bottom: 7px;
+
+  ${media.upToPhone`
+    width: auto;
+    flex-direction: row-reverse;
+  `}
 `
 const TypeIndicator = styled.div`
   width: 12px;
@@ -26,14 +31,23 @@ const TypeIndicator = styled.div`
     margin-top: 6px;
     border-top-width: 0;
   `}
+
+  ${media.upToPhone`
+    margin-right: 0;
+  `}
 `
 const InputField = styled(Field)`
   display: flex;
-  width: calc(100% - 12px);
+  width: calc(100% - 17px);
 
   & span {
     color: ${COLORS.INACTIVE};
   }
+
+  ${media.upToPhone`
+    margin-right: 8px;
+    flex-direction: row-reverse;
+  `}
 `
 
 const OptionItem = ({ input, type, handleRemoveClick }) => (
@@ -48,6 +62,4 @@ const OptionItem = ({ input, type, handleRemoveClick }) => (
   </OptionContainer>
 )
 
-export default withHandlers({
-  handleRemoveClick: ({ index, fields }) => _ => fields.remove(index),
-})(OptionItem)
+export default withFieldRemoveHandler(OptionItem)

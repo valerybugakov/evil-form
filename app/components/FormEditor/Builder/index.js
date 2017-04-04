@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { map, every, get } from 'lodash/fp'
 import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
+import { compose, map, filter, get, identity } from 'lodash/fp'
 import { dispatch } from 'redux/store'
+import { initialValues } from 'redux/form/reducer'
+import { allWithPositiveLength, hasDuplicates } from 'utils/form'
 import { media, COLORS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
@@ -11,7 +13,7 @@ import FieldList from './FieldList'
 const FormContainer = styled.main`
   padding: 54px 50px 0 50px;
 
-  ${media.mediumUp`
+  ${media.upToMedium`
     padding: 15px 0 0 0;
   `}
 `
@@ -20,7 +22,7 @@ const Form = styled.form`
   padding: 13px 50px;
   background: #fff;
 
-  ${media.phone`
+  ${media.upToPhone`
     padding: 13px 15px;
   `}
 `
@@ -39,7 +41,7 @@ const ErrorMessage = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 55px;
+  height: 34px; /* 55px */
   padding: 0 25px;
   margin-bottom: 22.9px;
   color: #973133;
@@ -52,7 +54,7 @@ const SaveButton = styled.button`
   width: 100px;
   height: 26.9px;
   color: #bec4ea;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   font-size: 10px;
   border-radius: 4px;
   background-color: #ffffff;
@@ -70,7 +72,7 @@ const SaveButton = styled.button`
 `
 
 const shouldCancelStart = ({ target }) => (
-  ![...target.parentNode.classList].includes('draggable')
+  !Array.prototype.includes.call(target.parentNode.classList, 'draggable')
 )
 
 const onSortEnd = ({ oldIndex, newIndex }) => {
@@ -85,12 +87,17 @@ const preventSubmitOnEnter = e => {
   }
 }
 
-const Builder = ({ handleSubmit, className, error }) => (
+const Builder = ({ handleSubmit, className, error, submitting }) => (
   <FormContainer className={className} onKeyDown={preventSubmitOnEnter}>
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
         <TitleField name="title" component={Textinput} />
-        <SaveButton type="submit">Save form</SaveButton>
+        <SaveButton
+          type="submit"
+          disabled={!!error || submitting}
+        >
+          Save form
+        </SaveButton>
       </HeadingRow>
       {
         error
@@ -101,33 +108,56 @@ const Builder = ({ handleSubmit, className, error }) => (
         name="fields"
         component={FieldList}
         onSortEnd={onSortEnd}
+        useWindowAsScrollContainer
+        helperClass="draggable-helper"
         shouldCancelStart={shouldCancelStart}
       />
     </Form>
   </FormContainer>
 )
 
-const eachWithPositiveLength = every(get('length'))
-// const hasDuplicates = array => new Set(array).size !== array.length
+const validateEmptyAndUniq = (fieldLabel, values) => {
+  const valuesNotEmpty = allWithPositiveLength(values)
+
+  if (!valuesNotEmpty) {
+    return `${fieldLabel} must be non empty`
+  }
+
+  const valuesUniq = !hasDuplicates(values)
+
+  if (!valuesUniq) {
+    return `${fieldLabel} must be uniq`
+  }
+
+  return null
+}
 
 export default reduxForm({
   form: 'formBuilder',
+  initialValues,
   onSubmit: values => console.log(values), // eslint-disable-line
-  validate: ({ fields }, props) => {
-    console.log(props)
+  validate: ({ fields }) => {
     const error = {}
 
-    const titles = map(get('title'), fields)
-    const titlesNotEmpty = eachWithPositiveLength(titles)
-    // const titlesUniq = !hasDuplicates(titles)
-
-    // const options = map(get('options'), fields)
-    // const optionsNotEpmty = eachWithPositiveLength(titles)
-    // const optionsUniq = !hasDuplicates(options)
-
-    if (!titlesNotEmpty) {
-      error._error = 'Lol'
+    if (fields.length === 0) {
+      error._error = 'Form should have at least one field'
+      return error
     }
+
+    const titles = map(get('title'), fields)
+    error._error = validateEmptyAndUniq('Question titles', titles)
+    if (error._error) {
+      return error
+    }
+
+    const optionFields = compose(filter(identity), map(get('options')))(fields)
+    optionFields.some(options => {
+      error._error = options.length === 0
+        ? 'Choices must be non empty'
+        : validateEmptyAndUniq('Choices', options)
+
+      return error._error
+    })
 
     return error
   },

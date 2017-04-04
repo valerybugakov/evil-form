@@ -4,9 +4,10 @@ import { injectBuilderValues } from 'redux/utils'
 import { COLORS } from 'styles'
 
 const Container = styled.div`
+  min-height: 36px;
   margin-bottom: 21px;
-  font-size: 9.9px;
   padding-bottom: 22.9px;
+  font-size: 9.9px;
   border-bottom: 1px solid ${COLORS.BORDER};
 `
 const Label = styled.span`

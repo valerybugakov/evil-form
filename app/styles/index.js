@@ -4,7 +4,7 @@ import { screenSizes } from './theme'
 export const media = Object.keys(screenSizes).reduce((acc, label) => {
   const emSize = screenSizes[label] / 16
 
-  acc[label] = (...args) => css`
+  acc[`upTo${label}`] = (...args) => css`
     @media only screen and (max-width: ${emSize}em) {
       ${css(...args)}
     }

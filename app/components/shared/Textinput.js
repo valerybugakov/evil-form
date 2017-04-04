@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withState, withHandlers } from 'reassemble'
+import { compose, withState, withHandlers } from 'recompose'
 import { COLORS, growWidth } from 'styles'
 import Icon from 'components/shared/Icon'
 
@@ -22,13 +22,13 @@ const InputWrapper = styled.div`
 const Input = styled.input`
   width: 100%;
   padding: 0;
-  margin: 0;
+  margin: 0 0 1px 0;
   border: 0;
   outline: none;
   appearance: none;
 `
 const EditIcon = styled(Icon)`
-  margin-left: 8px;
+  padding-left: 8px;
   cursor: pointer;
   color: #828282;
 
@@ -42,11 +42,7 @@ const RemoveIcon = EditIcon.extend`
   }
 `
 const InputValue = styled.span`
-  /*
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  */
+  word-break: break-word;
 
   &:after {
     display: ${props => props.required ? 'inline' : 'none'};
@@ -83,8 +79,7 @@ const Textinput = ({
     <div onFocus={handleEditClick} className={className}>
       <InputValue required={required}>
         {input.value}
-      </InputValue>
-      <EditIcon
+      </InputValue> <EditIcon
         width="8"
         height="12"
         name="edit"
@@ -110,7 +105,11 @@ const exitEditMode = (input, setEditMode, e) => {
 }
 
 export default compose(
-  withState('inEditMode', 'setEditMode', props => props.inEditMode),
+  withState(
+    'inEditMode',
+    'setEditMode',
+    ({ inEditMode, input }) => inEditMode && !input.value
+  ),
   withHandlers({
     handleInputKeyUp: ({ input, setEditMode }) => e => {
       if (e.keyCode === 27 || e.keyCode === 13) { // handle Esc and Enter keys

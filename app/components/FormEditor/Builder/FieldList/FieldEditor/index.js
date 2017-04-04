@@ -1,31 +1,37 @@
 import React from 'react'
 import { Field } from 'redux-form'
 import styled from 'styled-components'
-import { capitalize } from 'lodash'
 import { SortableElement } from 'react-sortable-hoc'
-import { compose, withHandlers, lifecycle } from 'recompose'
+import { compose, shouldUpdate } from 'recompose'
+import { withFieldRemoveHandler } from 'utils/form'
+import { fieldTypes } from 'redux/constants'
 import { injectBuilderValues } from 'redux/utils'
 import { buttonReset, media, COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 import Textinput from 'components/shared/Textinput'
 import Checkbox from 'components/shared/Checkbox'
-import * as choices from './Choices'
 import TitleInput from './TitleInput'
 
 const TableRow = styled.tr`
   vertical-align: top;
 
-  ${media.phone`
+  ${media.upToPhone`
     position: relative;
     display: block;
-    margin-bottom: .625em;
+    margin-bottom: 0.625em;
   `}
+
+  &.draggable-helper {
+    pointer-events: auto !important;
+    color: #4f4f4f;
+    background-color: hsla(0, 0%, 100%, 0.8);
+  }
 `
 const TableCell = styled.td`
   padding-bottom: 20.3px;
   font-size: 10px;
 
-  ${media.phone`
+  ${media.upToPhone`
     display: flex;
     justify-content: space-between;
 
@@ -41,21 +47,29 @@ const TableCell = styled.td`
       transform: rotate(90deg);
     }
 
-    &:last-child {
-      border-bottom: 0;
-    }
-
     & input,
     & > div:last-child {
       text-align: right;
     }
   `}
+
+  .draggable-helper > & {
+    padding: 0 10px 0 0;
+  }
 `
 const DragIcon = styled(Icon)`
   display: block;
   width: 26px;
   margin-top: -4px;
   color: #dadada;
+
+  & > svg {
+    cursor: pointer;
+
+    @media (-webkit-min-device-pixel-ratio:0) {
+      cursor: -webkit-grab;
+    }
+  }
 `
 const RequiredField = styled(Field)`
   margin-top: 1px;
@@ -77,7 +91,7 @@ const FieldEditor = ({
   handleRemoveClick,
 }) => {
   console.log('delete me')
-  const Choices = choices[capitalize(fieldType)] || choices.WithOptions
+  const Choices = fieldTypes[fieldType].choiceComponent
 
   return (
     <TableRow className={className}>
@@ -119,14 +133,8 @@ const FieldEditor = ({
 }
 
 export default compose(
-  lifecycle({
-    shouldComponentUpdate() { return false },
-  }),
-  withHandlers({
-    handleRemoveClick: ({ fields, index }) => _ => fields.remove(index),
-  }),
-  injectBuilderValues(({ input }) => ({
-    fieldType: `${input}.type`,
-  })),
+  shouldUpdate(_ => false),
+  withFieldRemoveHandler,
+  injectBuilderValues(({ input }) => ({ fieldType: `${input}.type` })),
   SortableElement,
 )(FieldEditor)

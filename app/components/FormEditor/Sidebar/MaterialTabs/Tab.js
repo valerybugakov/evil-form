@@ -10,7 +10,7 @@ const StyledTab = styled.div`
   color: ${props => props.active ? COLORS.HIGHLIGHTED : COLORS.INACTIVE};
   font-size: 9px;
   cursor: pointer;
-  transition: all 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  transition: color 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   border-bottom: 1px solid ${props => props.active
     ? 'transparent'
     : COLORS.BORDER
@@ -30,7 +30,10 @@ class TabItem extends Component {
   }
 
   handleFocusKeyUp = e => {
-    if (e.keyCode === 32 && document.activeElement === this.ref) {
+    if (
+      document.activeElement === this.ref &&
+      (e.keyCode === 32 || e.keyCode === 13) // handle Space and Enter keys
+    ) {
       this.handleClick()
     }
   }

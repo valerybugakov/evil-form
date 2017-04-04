@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { withHandlers } from 'recompose'
+import { withFieldAddHandler } from 'utils/form'
 import { buttonReset, COLORS } from 'styles'
 import Item from './Item'
 
@@ -17,7 +17,15 @@ const AddOptionButton = styled.button`
 const Options = ({ fields, type, handleAddClick }) => (
   <div>
     {
-      fields.map(input => <Item key={input} input={input} type={type} />)
+      fields.map((input, index) => (
+        <Item
+          key={input}
+          input={input}
+          type={type}
+          index={index}
+          fields={fields}
+        />
+      ))
     }
     <AddOptionButton onClick={handleAddClick}>
       + Add Choice
@@ -25,10 +33,4 @@ const Options = ({ fields, type, handleAddClick }) => (
   </div>
 )
 
-export default withHandlers({
-  handleAddClick: ({ fields }) => e => {
-    e.preventDefault()
-    fields.push('')
-  },
-})(Options)
-
+export default withFieldAddHandler({ payload: '' })(Options)

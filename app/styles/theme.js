@@ -9,11 +9,11 @@ export const COLORS = {
 }
 
 export const screenSizes = {
-  wideUp: 1920,
-  largeUp: 1280,
-  mediumUp: 1024,
-  smallUp: 768,
-  phone: 600,
-  smallOnly: 376,
+  Wide: 1920,
+  Large: 1280,
+  Medium: 1024,
+  Small: 768,
+  Phone: 600,
+  ExtraSmall: 376,
 }
 

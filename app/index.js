@@ -3,12 +3,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { persistStore } from 'redux-persist'
 import 'sanitize.css/sanitize.css'
-import 'flexboxgrid'
 import 'styles/global'
-/* eslint-disable import/no-unresolved, import/extensions */
+/* eslint-disable import/no-unresolved */
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name].[ext]!./.htaccess'
-/* eslint-enable import/no-unresolved, import/extensions */
+/* eslint-enable import/no-unresolved */
 import store from 'redux/store'
 import Root from 'components/Root'
 

@@ -1,26 +1,32 @@
-export const fieldTypes = [
-  {
-    type: 'text',
+import { Text, File, Textarea, WithOptions } from 'components/shared/Choices'
+
+export const fieldTypes = {
+  text: {
     label: 'Single-line text',
+    choiceComponent: Text,
   },
-  {
-    type: 'radio',
+  radio: {
     label: 'Radio button',
+    choiceComponent: WithOptions,
+    hasOptions: true,
   },
-  {
-    type: 'checkbox',
+  checkbox: {
     label: 'Checkboxes',
+    choiceComponent: WithOptions,
+    hasOptions: true,
   },
-  {
-    type: 'select',
+  select: {
     label: 'Select',
+    choiceComponent: WithOptions,
+    hasOptions: true,
   },
-  {
-    type: 'file',
+  file: {
     label: 'File upload',
+    choiceComponent: File,
   },
-  {
+  textarea: {
     type: 'textarea',
     label: 'Paragraph text',
+    choiceComponent: Textarea,
   },
-]
+}

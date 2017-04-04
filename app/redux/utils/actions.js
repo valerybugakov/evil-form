@@ -1,6 +1,6 @@
 /* flow */
 import { createAction } from 'redux-act'
-import { identity, noop } from 'ramda'
+import { identity, noop } from 'lodash/fp'
 import { fakeStore } from 'redux/utils/dispatch'
 
 export const INIT = 'init'

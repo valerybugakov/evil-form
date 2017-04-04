@@ -21,6 +21,7 @@ const Header = styled.h1`
   font-weight: normal;
   text-align: center;
   background-color: ${COLORS.BORDER};
+  word-break: break-word;
 `
 const TabContainer = styled(Tabs)`
   padding-bottom: 25px;

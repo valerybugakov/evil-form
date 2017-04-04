@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 
 module.exports = options => ({
   entry: options.entry,
@@ -18,40 +19,8 @@ module.exports = options => ({
       include: /node_modules/,
       loaders: ['style-loader', 'css-loader'],
     }, {
-      test: /\.(eot|ttf|woff|woff2)$/,
-      loader: 'file-loader',
-    }, {
       test: /\.svg?$/,
       loader: 'svg-sprite-loader',
-    }, {
-      test: /\.(jpg|png|gif)$/,
-      loaders: [
-        'file-loader',
-        {
-          loader: 'image-webpack-loader',
-          query: {
-            progressive: true,
-            optimizationLevel: 7,
-            interlaced: false,
-            pngquant: {
-              quality: '65-90',
-              speed: 4,
-            },
-          },
-        },
-      ],
-    }, {
-      test: /\.html$/,
-      loader: 'html-loader',
-    }, {
-      test: /\.json$/,
-      loader: 'json-loader',
-    }, {
-      test: /\.(mp4|webm)$/,
-      loader: 'url-loader',
-      query: {
-        limit: 10000,
-      },
     }],
   },
   plugins: options.plugins.concat([
@@ -66,14 +35,11 @@ module.exports = options => ({
       },
     }),
     new webpack.NamedModulesPlugin(),
+    // new BundleAnalyzerPlugin.BundleAnalyzerPlugin(),
   ]),
   resolve: {
     modules: ['app', 'node_modules'],
-    extensions: [
-      '.js',
-      '.jsx',
-      '.react.js',
-    ],
+    extensions: ['.js'],
     mainFields: [
       'browser',
       'jsnext:main',

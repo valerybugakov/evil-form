@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { arrayPush } from 'redux-form'
-import { assemble, withHandlers } from 'reassemble'
+import { compose, withHandlers } from 'recompose'
 import { dispatch } from 'redux/store'
 import { COLORS } from 'styles'
 
@@ -33,10 +33,13 @@ const FieldItem = ({ label, handleClick }) => (
   </Field>
 )
 
-export default assemble(
+export default compose(
   withHandlers({
-    handleClick: ({ type }) => _ => (
-      dispatch(arrayPush('formBuilder', 'fields', { type }))
+    handleClick: ({ type, hasOptions }) => _ => (
+      dispatch(arrayPush('formBuilder', 'fields', {
+        type,
+        ...hasOptions && { options: [] },
+      }))
     ),
   })
 )(FieldItem)

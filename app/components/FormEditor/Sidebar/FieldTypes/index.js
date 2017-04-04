@@ -5,9 +5,10 @@ import FieldType from './FieldType'
 const FieldTypes = () => (
   <div>
     {
-      fieldTypes.map(config => (
+      Object.entries(fieldTypes).map(([type, config]) => (
         <FieldType
-          key={config.type}
+          key={type}
+          type={type}
           {...config}
         />
       ))

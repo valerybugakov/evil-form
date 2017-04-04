@@ -1,4 +1,5 @@
-import { path } from 'ramda'
+import { get } from 'lodash/fp'
+import { autoRehydrate } from 'redux-persist'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { createBrowserHistory } from 'history'
 import createSagaMiddleware from 'redux-saga'
@@ -11,7 +12,7 @@ const initialState = {}
 const context = {}
 
 const eventsFilter = () => next => reduxAction => {
-  if (path(['payload', 'nativeEvent'], reduxAction)) {
+  if (get('payload.nativeEvent', reduxAction)) {
     reduxAction.payload = undefined
   }
 
@@ -20,6 +21,7 @@ const eventsFilter = () => next => reduxAction => {
 
 const enhancers = [
   applyMiddleware(sagaMiddleware, eventsFilter),
+  autoRehydrate(),
 ]
 
 const composeEnhancers = (

@@ -1,14 +1,4 @@
-import {
-  transduce,
-  compose,
-  map,
-  ifElse,
-  identity,
-  filter,
-  prop,
-  flip,
-  append,
-} from 'ramda'
+import { identity } from 'lodash/fp'
 import { takeLatest } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import request from 'redux/request'
@@ -47,8 +37,3 @@ export function bindFetcher(actions) {
   const fetch = fetchEntity.bind(null, actions)
   return takeLatest(actions.init.getType(), fetch)
 }
-
-export const bindOnlyRequestActions = actions => transduce(compose(
-  filter(v => typeof v === 'object'),
-  map(ifElse(prop('init'), bindFetcher, bindOnlyRequestActions)),
-), flip(append), [], Object.values(actions))
