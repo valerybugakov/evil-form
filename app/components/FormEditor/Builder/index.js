@@ -3,9 +3,11 @@ import styled from 'styled-components'
 import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { compose, map, filter, get, identity } from 'lodash/fp'
 import { dispatch } from 'redux/store'
-import { initialValues } from 'redux/form/reducer'
+import { promisifyAction } from 'redux/utils'
+import { saveForm } from 'redux/formBuilder/actions'
+import { formBuilderInitialValues } from 'redux/constants'
 import { allWithPositiveLength, hasDuplicates } from 'utils/form'
-import { media, COLORS } from 'styles'
+import { media, actionButtonCSS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
@@ -51,24 +53,7 @@ const ErrorMessage = styled.div`
   border: solid 1px #ebcccc;
 `
 const SaveButton = styled.button`
-  width: 100px;
-  height: 26.9px;
-  color: #bec4ea;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  font-size: 10px;
-  border-radius: 4px;
-  background-color: #ffffff;
-  border: solid 1px #bec4ea;
-
-  &:hover {
-    color: #fff;
-    border-width: 0;
-    background-image: radial-gradient(
-      circle at 50% 51%,
-      #9aa5ec,
-      ${COLORS.HIGHLIGHTED}
-    );
-  }
+  ${actionButtonCSS}
 `
 
 const shouldCancelStart = ({ target }) => (
@@ -134,9 +119,9 @@ const validateEmptyAndUniq = (fieldLabel, values) => {
 
 export default reduxForm({
   form: 'formBuilder',
-  initialValues,
-  onSubmit: values => console.log(values), // eslint-disable-line
-  validate: ({ fields }) => {
+  initialValues: formBuilderInitialValues,
+  onSubmit: values => promisifyAction(saveForm, values),
+  validate: ({ fields = [] }) => {
     const error = {}
 
     if (fields.length === 0) {

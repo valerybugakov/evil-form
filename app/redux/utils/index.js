@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { formBuilderSelector } from 'redux/form/selectors'
+import { formBuilderSelector } from 'redux/formBuilder/selectors'
 
 export const injectBuilderValues = getPaths => connect((state, props) => {
   const paths = typeof getPaths === 'function' ? getPaths(props) : getPaths
@@ -10,5 +10,5 @@ export const injectBuilderValues = getPaths => connect((state, props) => {
   }, {})
 })
 
+export * from './redirect'
 export * from './actions'
-export * from './sagas'

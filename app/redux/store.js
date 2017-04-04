@@ -1,7 +1,6 @@
 import { get } from 'lodash/fp'
 import { autoRehydrate } from 'redux-persist'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { createBrowserHistory } from 'history'
 import createSagaMiddleware from 'redux-saga'
 import { fakeStore } from 'redux/utils/dispatch'
 import rootReducer from 'redux/reducer'
@@ -57,7 +56,5 @@ if (module.hot) {
     })
   })
 }
-
-export const history = createBrowserHistory()
 
 export default store

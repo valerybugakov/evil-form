@@ -15,7 +15,8 @@ const EditorContainer = styled.div`
   `}
 
   ${media.upToPhone`
-    textarea, input {
+    textarea:enabled,
+    input:enabled {
       font-size: 16px;
     }
   `}
