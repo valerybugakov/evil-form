@@ -1,4 +1,3 @@
-import { uniqueId } from 'lodash/fp'
 import { takeLatest } from 'redux-saga'
 import { redirect } from 'redux/utils/redirect'
 import { saveForm, saveFormSuccess, saveFormFailure } from './actions'
@@ -7,13 +6,20 @@ function* onFormSave({ payload, meta = {} }) {
   try {
     // Emulate backend request
     yield new Promise(resolve => {
-      const formData = { id: uniqueId('form'), ...payload }
-      console.log('Saving to redux state:', formData)
+      // ID would come from the server, so just for a demo
+      // we use unix timestamp as an ID :)
+      const timestamp = new Date().valueOf()
+      const formData = {
+        id: timestamp,
+        updatedAt: timestamp,
+        ...payload,
+      }
+
       saveFormSuccess(formData)
 
       if (meta.resolve) meta.resolve(formData)
       resolve(formData)
-      redirect('/forms')
+      redirect('/')
     })
   } catch (err) {
     if (meta.reject) meta.reject(err)

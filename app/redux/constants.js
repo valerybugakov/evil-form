@@ -31,7 +31,9 @@ export const fieldTypes = {
   },
 }
 
-export const formBuilderInitialValues = {
+export const driverForm = {
+  id: new Date().valueOf(),
+  updatedAt: new Date().valueOf(),
   title: 'San Francisco Driver Form',
   description: 'Welcome aboard!',
   fields: [

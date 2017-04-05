@@ -52,10 +52,27 @@ const TableCell = styled.td`
       text-align: right;
     }
   `}
-
-  .draggable-helper > & {
-    padding: 0 10px 0 0;
-  }
+`
+const TitleCell = TableCell.extend`
+  ${media.downToPhone`
+    .draggable-helper & {
+      width: 55%;
+    }
+  `}
+`
+const ChoicesCell = TableCell.extend`
+  ${media.downToPhone`
+    .draggable-helper & {
+      width: 25%;
+    }
+  `}
+`
+const RequiredCell = TableCell.extend`
+  ${media.downToPhone`
+    .draggable-helper & {
+      width: 10%;
+    }
+  `}
 `
 const DragIcon = styled(Icon)`
   display: block;
@@ -103,26 +120,26 @@ const FieldEditor = ({
           className="draggable"
         />
       </TableCell>
-      <TableCell data-label="Title">
+      <TitleCell data-label="Title">
         <TitleInput
           inputPath={input}
           component={Textinput}
           name={`${input}.title`}
         />
-      </TableCell>
-      <TableCell data-label="Choices">
+      </TitleCell>
+      <ChoicesCell data-label="Choices">
         <Choices
           input={input}
           type={fieldType}
         />
-      </TableCell>
-      <TableCell data-label="Required?">
+      </ChoicesCell>
+      <RequiredCell data-label="Required?">
         <RequiredField
           type="checkbox"
           component={Checkbox}
           name={`${input}.required`}
         />
-      </TableCell>
+      </RequiredCell>
       <TableCell>
         <DeleteButton onClick={handleRemoveClick}>
           Remove

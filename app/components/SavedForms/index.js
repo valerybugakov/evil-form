@@ -1,4 +1,5 @@
 import React from 'react'
+import { sortBy } from 'lodash'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -14,10 +15,13 @@ const PageTitle = styled.h1`
   color: ${COLORS.PRIMARY};
 `
 const FormList = styled.ul`
-  margin-bottom: 35px;
+  margin-bottom: 30px;
   padding-left: 10px;
 `
-const FormItem = styled(Link)`
+const FormItem = styled.li`
+  margin-bottom: 5px;
+`
+const FormLink = styled(Link)`
   text-decoration: none;
   color: ${COLORS.SECONDARY};
 
@@ -25,7 +29,7 @@ const FormItem = styled(Link)`
     color: ${COLORS.HIGHLIGHTED};
   }
 `
-const BuilderLink = styled(Link)`
+const CreateNewButton = styled(Link)`
   ${actionButtonCSS}
   display: block;
   font-size: 12px;
@@ -39,15 +43,17 @@ const SavedForms = ({ forms }) => (
     <PageTitle>Saved forms</PageTitle>
     <FormList>
       {forms.map(form => (
-        <li key={form.id} >
-          <FormItem to="/">{form.title}</FormItem>
-        </li>
+        <FormItem key={form.id} >
+          <FormLink to={`/edit/${form.id}`}>
+            {form.title}
+          </FormLink>
+        </FormItem>
       ))}
     </FormList>
-    <BuilderLink to="/">+ New form</BuilderLink>
+    <CreateNewButton to="/edit">+ New form</CreateNewButton>
   </Container>
 )
 
 export default connect(state => ({
-  forms: state.formBuilder.savedForms,
+  forms: sortBy(Object.values(state.formBuilder.savedForms), ['updatedAt']),
 }))(SavedForms)

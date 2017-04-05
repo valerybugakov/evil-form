@@ -14,8 +14,6 @@ injectGlobal`
   }
 
   #app {
-    display: flex;
-    flex-direction: column;
     min-height: 100%;
     min-width: 100%;
     color: ${COLORS.PRIMARY};

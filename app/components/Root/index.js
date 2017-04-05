@@ -9,8 +9,8 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
       <div>
-        <Route exact path="/forms" component={SavedForms} />
-        <Route exact path="/" component={FormEditor} />
+        <Route exact path="/edit/:formId?" component={FormEditor} />
+        <Route exact path="/" component={SavedForms} />
       </div>
     </Router>
   </Provider>

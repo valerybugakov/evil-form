@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { COLORS } from 'styles'
 import { injectBuilderValues } from 'redux/utils'
+import { COLORS } from 'styles'
 import Tabs, { TabContent } from './MaterialTabs'
 import FieldTypes from './FieldTypes'
 import Description from './Description'
@@ -14,9 +14,9 @@ const SidebarContainer = styled.aside`
   border: solid 1px ${COLORS.BORDER};
 `
 const Header = styled.h1`
+  min-height: 54.3px;
   margin: 0;
   padding: 18px 25px;
-  min-height: 54.3px;
   font-size: 15px;
   font-weight: normal;
   text-align: center;

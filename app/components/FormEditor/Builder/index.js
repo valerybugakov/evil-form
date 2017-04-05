@@ -1,12 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
+import { withRouter } from 'react-router'
 import { compose, map, filter, get, identity } from 'lodash/fp'
+import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
 import { promisifyAction } from 'redux/utils'
 import { saveForm } from 'redux/formBuilder/actions'
-import { formBuilderInitialValues } from 'redux/constants'
-import { allWithPositiveLength, hasDuplicates } from 'utils/form'
+import { allWithPositiveLength, hasDuplicates } from 'utils'
 import { media, actionButtonCSS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
@@ -72,14 +73,14 @@ const preventSubmitOnEnter = e => {
   }
 }
 
-const Builder = ({ handleSubmit, className, error, submitting }) => (
+const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
   <FormContainer className={className} onKeyDown={preventSubmitOnEnter}>
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
         <TitleField name="title" component={Textinput} />
         <SaveButton
           type="submit"
-          disabled={!!error || submitting}
+          disabled={!!error || submitting || pristine}
         >
           Save form
         </SaveButton>
@@ -117,33 +118,53 @@ const validateEmptyAndUniq = (fieldLabel, values) => {
   return null
 }
 
-export default reduxForm({
-  form: 'formBuilder',
-  initialValues: formBuilderInitialValues,
-  onSubmit: values => promisifyAction(saveForm, values),
-  validate: ({ fields = [] }) => {
-    const error = {}
-
+/* eslint-disable consistent-return, no-restricted-syntax */
+const formValueVaidators = [
+  (_, title) => {
+    if (title.length === 0) {
+      return 'Form title must be non empty'
+    }
+  },
+  fields => {
     if (fields.length === 0) {
-      error._error = 'Form should have at least one field'
-      return error
+      return 'Form should have at least one field'
     }
-
+  },
+  fields => {
     const titles = map(get('title'), fields)
-    error._error = validateEmptyAndUniq('Question titles', titles)
-    if (error._error) {
-      return error
-    }
-
+    return validateEmptyAndUniq('Question titles', titles)
+  },
+  fields => {
     const optionFields = compose(filter(identity), map(get('options')))(fields)
-    optionFields.some(options => {
-      error._error = options.length === 0
+
+    for (const options of optionFields) {
+      const message = options.length === 0
         ? 'Choices must be non empty'
         : validateEmptyAndUniq('Choices', options)
 
-      return error._error
-    })
-
-    return error
+      if (message) return message
+    }
   },
-})(Builder)
+]
+/* eslint-enable consistent-return, no-restricted-syntax */
+
+export default compose(
+  withRouter,
+  connect((state, { match }) => ({
+    initialValues: state.formBuilder.savedForms[match.params.formId],
+  })),
+  reduxForm({
+    form: 'formBuilder',
+    onSubmit: values => promisifyAction(saveForm, values),
+    validate: ({ title = '', fields = [] }) => {
+      const error = {}
+
+      formValueVaidators.some(validate => {
+        error._error = validate(fields, title)
+        return error._error
+      })
+
+      return error
+    },
+  })
+)(Builder)
