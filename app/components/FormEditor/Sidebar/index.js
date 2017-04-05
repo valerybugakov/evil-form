@@ -17,11 +17,11 @@ const Header = styled.h1`
   min-height: 54.3px;
   margin: 0;
   padding: 18px 25px;
+  text-align: center;
   font-size: 15px;
   font-weight: normal;
-  text-align: center;
-  background-color: ${COLORS.BORDER};
   word-break: break-word;
+  background-color: ${COLORS.BORDER};
 `
 const TabContainer = styled(Tabs)`
   padding-bottom: 25px;

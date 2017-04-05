@@ -45,12 +45,12 @@ const ErrorMessage = styled.div`
   align-items: center;
   width: 100%;
   height: 34px; /* 55px */
-  padding: 0 25px;
   margin-bottom: 22.9px;
+  padding: 0 25px;
   color: #973133;
   font-size: 12px;
-  border-radius: 4px;
   background-color: #f2dede;
+  border-radius: 4px;
   border: solid 1px #ebcccc;
 `
 const SaveButton = styled.button`
@@ -74,7 +74,10 @@ const preventSubmitOnEnter = e => {
 }
 
 const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
-  <FormContainer className={className} onKeyDown={preventSubmitOnEnter}>
+  <FormContainer
+    className={className}
+    onKeyDown={preventSubmitOnEnter}
+  >
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
         <TitleField name="title" component={Textinput} />
@@ -102,6 +105,7 @@ const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
   </FormContainer>
 )
 
+/* eslint-disable consistent-return, no-restricted-syntax */
 const validateEmptyAndUniq = (fieldLabel, values) => {
   const valuesNotEmpty = allWithPositiveLength(values)
 
@@ -114,11 +118,8 @@ const validateEmptyAndUniq = (fieldLabel, values) => {
   if (!valuesUniq) {
     return `${fieldLabel} must be uniq`
   }
-
-  return null
 }
 
-/* eslint-disable consistent-return, no-restricted-syntax */
 const formValueVaidators = [
   (_, title) => {
     if (title.length === 0) {

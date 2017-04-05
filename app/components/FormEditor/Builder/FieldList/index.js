@@ -14,21 +14,20 @@ const Table = styled.table`
 `
 const TableHead = styled.thead`
   ${media.upToPhone`
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
     position: absolute;
     width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: none;
   `}
 `
 const ColumnTitle = styled.th`
+  padding-bottom: 17.3px;
   font-size: 9.9px;
   font-weight: normal;
   text-transform: uppercase;
-  padding-bottom: 17.3px;
 `
 const DragColumn = ColumnTitle.extend`
   width: 26px;
@@ -64,7 +63,7 @@ const RemoveColumn = ColumnTitle.extend`
 
 @SortableContainer
 class FieldList extends Component {
-  shouldScroll = false // eslint-disable-line
+  shouldScroll = false // eslint-disable-line react/sort-comp
 
   shouldComponentUpdate(nextProps) {
     this.shouldScroll = this.props.fields.length < nextProps.fields.length

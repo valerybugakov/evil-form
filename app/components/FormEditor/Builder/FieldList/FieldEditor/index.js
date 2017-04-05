@@ -107,7 +107,6 @@ const FieldEditor = ({
   fieldType,
   handleRemoveClick,
 }) => {
-  console.log('delete me')
   const Choices = fieldTypes[fieldType].choiceComponent
 
   return (

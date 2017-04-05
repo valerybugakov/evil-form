@@ -11,8 +11,8 @@ const Container = styled.div`
   border-bottom: 1px solid ${COLORS.BORDER};
 `
 const Label = styled.span`
-  color: ${COLORS.INACTIVE};
   margin-right: 2px;
+  color: ${COLORS.INACTIVE};
 `
 
 const DescriptionRow = ({ description }) => (

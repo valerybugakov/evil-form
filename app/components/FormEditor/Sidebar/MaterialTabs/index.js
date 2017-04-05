@@ -4,8 +4,8 @@ import { COLORS } from 'styles'
 import Tab from './Tab'
 
 const TabGroup = styled.div`
-  display: flex;
   position: relative;
+  display: flex;
 `
 const CurrentTabIndicator = styled.div`
   position: absolute;
