@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Route } from 'react-router-dom'
 import { media } from 'styles'
 import Sidebar from './Sidebar'
+import Editor from './Builder/Editor'
 import Builder from './Builder'
 
 const EditorContainer = styled.div`
@@ -30,21 +32,13 @@ const FixedSidebar = styled(Sidebar)`
     height: auto;
   `}
 `
-const FormBuilder = styled(Builder)`
-  width: 66.66%;
-  margin-left: 33.33%;
 
-  ${media.upToMedium`
-    width: 100%;
-    margin-left: 0;
-  `}
-`
-
-const FormEditor = () => (
+const FormEditorLayout = () => (
   <EditorContainer>
     <FixedSidebar />
-    <FormBuilder />
+    <Route exact path="/forms/edit/:formId" component={Editor} />
+    <Route exact path="/forms/create" component={Builder} />
   </EditorContainer>
 )
 
-export default FormEditor
+export default FormEditorLayout

@@ -44,13 +44,13 @@ const SavedForms = ({ forms }) => (
     <FormList>
       {forms.map(form => (
         <FormItem key={form.id} >
-          <FormLink to={`/edit/${form.id}`}>
+          <FormLink to={`/forms/edit/${form.id}`}>
             {form.title}
           </FormLink>
         </FormItem>
       ))}
     </FormList>
-    <CreateNewButton to="/edit">+ New form</CreateNewButton>
+    <CreateNewButton to="/forms/create">+ New form</CreateNewButton>
   </Container>
 )
 

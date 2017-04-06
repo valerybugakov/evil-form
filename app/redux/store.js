@@ -2,7 +2,7 @@ import { configureStore } from 'redux/utils'
 import rootReducer from 'redux/reducer'
 import rootSaga from 'redux/sagas'
 
-const store = configureStore(rootReducer, rootSaga, {})
+const store = configureStore(rootReducer, {}, rootSaga)
 
 /* istanbul ignore next */
 if (module.hot) {

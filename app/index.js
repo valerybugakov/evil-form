@@ -22,7 +22,7 @@ const render = () => {
   )
 }
 
-persistStore(store, {}, render)
+persistStore(store, { blacklist: ['form'] }, render)
 
 if (module.hot) {
   module.hot.accept('components/Root', () => {

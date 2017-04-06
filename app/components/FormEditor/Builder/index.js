@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { withRouter } from 'react-router'
 import { compose, map, filter, get, identity } from 'lodash/fp'
 import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
@@ -14,9 +12,13 @@ import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
 
 const FormContainer = styled.main`
+  width: 66.66%;
+  margin-left: 33.33%;
   padding: 54px 50px 0 50px;
 
   ${media.upToMedium`
+    width: 100%;
+    margin-left: 0;
     padding: 15px 0 0 0;
   `}
 `
@@ -149,23 +151,17 @@ const formValueVaidators = [
 ]
 /* eslint-enable consistent-return, no-restricted-syntax */
 
-export default compose(
-  withRouter,
-  connect((state, { match }) => ({
-    initialValues: state.formBuilder.savedForms[match.params.formId],
-  })),
-  reduxForm({
-    form: 'formBuilder',
-    onSubmit: values => promisifyAction(saveForm, values),
-    validate: ({ title = '', fields = [] }) => {
-      const error = {}
+export default reduxForm({
+  form: 'formBuilder',
+  onSubmit: values => promisifyAction(saveForm, values),
+  validate: ({ title = '', fields = [] }) => {
+    const error = {}
 
-      formValueVaidators.some(validate => {
-        error._error = validate(fields, title)
-        return error._error
-      })
+    formValueVaidators.some(validate => {
+      error._error = validate(fields, title)
+      return error._error
+    })
 
-      return error
-    },
-  })
-)(Builder)
+    return error
+  },
+})(Builder)
