@@ -4,13 +4,6 @@
     'styled-components',
     "syntax-dynamic-import",
     "transform-decorators-legacy",
-    // 'transform-es2015-spread',
-    // ['transform-object-rest-spread', {
-    //   useBuiltIns: true,
-    // }],
-    // ['transform-class-properties', {
-    //   spec: true,
-    // }],
   ],
   "presets": [
     ["latest", { "es2015": { "modules": false } }],
