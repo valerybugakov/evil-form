@@ -51,6 +51,9 @@ const InputValue = styled.span`
     margin-left: 4px;
   }
 `
+const Placeholder = styled.span`
+  color: ${COLORS.INACTIVE};
+`
 
 const Textinput = ({
   input,
@@ -58,6 +61,7 @@ const Textinput = ({
   className,
   inEditMode,
   handleBlur,
+  placeholder,
   handleEditClick,
   handleInputKeyUp,
   handleRemoveClick,
@@ -78,7 +82,7 @@ const Textinput = ({
   return (
     <div onFocus={handleEditClick} className={className}>
       <InputValue required={required}>
-        {input.value}
+        {input.value || <Placeholder>{placeholder}</Placeholder>}
       </InputValue> <EditIcon
         width="8"
         height="12"

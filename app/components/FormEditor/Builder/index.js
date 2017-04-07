@@ -82,7 +82,11 @@ const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
   >
     <Form onSubmit={handleSubmit}>
       <HeadingRow>
-        <TitleField name="title" component={Textinput} />
+        <TitleField
+          name="title"
+          component={Textinput}
+          placeholder="Form Title"
+        />
         <SaveButton
           type="submit"
           disabled={!!error || submitting || pristine}

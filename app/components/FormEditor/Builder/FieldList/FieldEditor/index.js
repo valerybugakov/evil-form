@@ -124,6 +124,7 @@ const FieldEditor = ({
           inputPath={input}
           component={Textinput}
           name={`${input}.title`}
+          placeholder="Question title"
         />
       </TitleCell>
       <ChoicesCell data-label="Choices">

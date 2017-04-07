@@ -32,7 +32,7 @@ const TabContainer = styled(Tabs)`
   }
 `
 
-const Sidebar = ({ className, formTitle }) => (
+const Sidebar = ({ className, formTitle = 'Form Title' }) => (
   <SidebarContainer className={className}>
     <Header>{formTitle}</Header>
     <TabContainer labels={tabLabels}>
