@@ -27,15 +27,16 @@ describe('action utils', () => {
       const reducer = createReducer({
         [testAction]: (state, payload, { resolve }) => {
           const value = state.value + payload
-          if (resolve) resolve(value)
+          resolve(value)
           return { value }
         },
       })
 
-      configureStore(reducer, { value: 0 })
+      const store = configureStore(reducer, { value: 0 })
       const value = await promisifyAction(testAction, 7)
 
       expect(value).toEqual(7)
+      expect(store.getState()).toEqual({ value: 7 })
     })
   })
 })

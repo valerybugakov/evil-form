@@ -1,4 +1,3 @@
-import { identity } from 'lodash/fp'
 import { autoRehydrate } from 'redux-persist'
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
@@ -7,7 +6,7 @@ import { fakeStore } from 'redux/utils/dispatch'
 const sagaMiddleware = createSagaMiddleware()
 
 export function configureStore(
-  reducer = identity,
+  reducer,
   initialState = {},
   rootSaga
 ) {
@@ -30,7 +29,7 @@ export function configureStore(
     composeEnhancers(...enhancers),
   )
 
-  // Assign real dispatch for autobinded actions
+  // Assign real dispatch to `fakeStore` which was used to prebind actions
   fakeStore.dispatch = store.dispatch
 
   if (rootSaga) {

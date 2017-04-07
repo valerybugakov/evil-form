@@ -4,7 +4,6 @@ import rootSaga from 'redux/sagas'
 
 const store = configureStore(rootReducer, {}, rootSaga)
 
-/* istanbul ignore next */
 if (module.hot) {
   module.hot.accept('redux/reducer', () => {
     import('redux/reducer').then(reducerModule => {
