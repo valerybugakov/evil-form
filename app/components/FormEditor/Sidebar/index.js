@@ -15,15 +15,35 @@ const SidebarContainer = styled.aside`
   border: solid 1px ${COLORS.BORDER};
   padding-bottom: 25px;
 `
-const Header = styled.h1`
+const Header = styled.div`
+  display: flex;
+  align-items: center;
   min-height: 54.3px;
   margin: 0;
   padding: 18px 25px;
   text-align: center;
+  background-color: ${COLORS.BORDER};
+`
+const SavedFormsLink = styled(Link)`
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-left: 4px solid;
+  border-bottom: 4px solid;
+  border-color: ${COLORS.SECONDARY};
+  transform: rotate(45deg);
+
+  &:hover {
+    border-color: ${COLORS.HIGHLIGHTED};
+  }
+`
+const FormTitle = styled.h1`
+  flex: 1;
+  margin: 0 0 0 10px;
+  padding: 0;
   font-size: 15px;
   font-weight: normal;
   word-break: break-word;
-  background-color: ${COLORS.BORDER};
 `
 const TabContainer = styled(Tabs)`
   & > div:last-child {
@@ -31,21 +51,13 @@ const TabContainer = styled(Tabs)`
     margin: 0 50px;
   }
 `
-const SavedFormsLink = styled(Link)`
-  margin: 0 50px;
-  font-size: 12px;
-  text-decoration: none;
-  text-align: center;
-  color: ${COLORS.INACTIVE};
-
-  &:hover {
-    color: ${COLORS.HIGHLIGHTED};
-  }
-`
 
 const Sidebar = ({ className, formTitle = 'Form Title' }) => (
   <SidebarContainer className={className}>
-    <Header>{formTitle}</Header>
+    <Header>
+      <SavedFormsLink to="/" />
+      <FormTitle>{formTitle}</FormTitle>
+    </Header>
     <TabContainer labels={tabLabels}>
       <TabContent
         title="Add Custom Field"
@@ -60,7 +72,6 @@ const Sidebar = ({ className, formTitle = 'Form Title' }) => (
         <Description />
       </TabContent>
     </TabContainer>
-    <SavedFormsLink to="/">Saved forms</SavedFormsLink>
   </SidebarContainer>
 )
 
