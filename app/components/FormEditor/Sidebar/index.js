@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { injectBuilderValues } from 'redux/utils'
 import { COLORS } from 'styles'
 import Tabs, { TabContent } from './MaterialTabs'
@@ -12,6 +13,7 @@ const SidebarContainer = styled.aside`
   padding: 0;
   background: white;
   border: solid 1px ${COLORS.BORDER};
+  padding-bottom: 25px;
 `
 const Header = styled.h1`
   min-height: 54.3px;
@@ -24,11 +26,20 @@ const Header = styled.h1`
   background-color: ${COLORS.BORDER};
 `
 const TabContainer = styled(Tabs)`
-  padding-bottom: 25px;
-
   & > div:last-child {
     min-height: 215px;
     margin: 0 50px;
+  }
+`
+const SavedFormsLink = styled(Link)`
+  margin: 0 50px;
+  font-size: 12px;
+  text-decoration: none;
+  text-align: center;
+  color: ${COLORS.INACTIVE};
+
+  &:hover {
+    color: ${COLORS.HIGHLIGHTED};
   }
 `
 
@@ -49,6 +60,7 @@ const Sidebar = ({ className, formTitle = 'Form Title' }) => (
         <Description />
       </TabContent>
     </TabContainer>
+    <SavedFormsLink to="/">Saved forms</SavedFormsLink>
   </SidebarContainer>
 )
 
