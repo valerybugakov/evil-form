@@ -8,6 +8,7 @@ import Textinput from 'components/shared/Textinput'
 const OptionContainer = styled.div`
   display: flex;
   width: 85%;
+  min-height: 13px;
   margin-bottom: 7px;
 
   ${media.upToPhone`

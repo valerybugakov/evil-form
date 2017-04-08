@@ -1,7 +1,6 @@
 const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = require('./webpack.base.babel')({
@@ -17,14 +16,6 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      children: true,
-      minChunks: 2,
-      async: true,
-    }),
-
-    // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'app/index.html',
       minify: {
@@ -52,19 +43,7 @@ module.exports = require('./webpack.base.babel')({
       // this is applied before any match in `caches` section
       excludes: ['.htaccess'],
 
-      caches: {
-        main: [':rest:'],
-
-        // All chunks marked as `additional`, loaded after main section
-        // and do not prevent SW to install. Change to `optional` if
-        // do not want them to be preloaded at all
-        // (cached only when first loaded)
-        additional: ['*.chunk.js'],
-      },
-
-      // Removes warning for about `additional` section usage
-      safeToUseOptionalCaches: true,
-
+      caches: { main: [':rest:'] },
       AppCache: false,
     }),
     new CopyWebpackPlugin([{ from: 'static' }]),

@@ -22,17 +22,15 @@ const StyledTab = styled.div`
 `
 
 class TabItem extends Component {
-  getTabRef = ref => this.ref = ref
-
   handleClick = _ => {
     const { index, setTab } = this.props
     setTab(index)
   }
 
-  handleFocusKeyUp = e => {
+  handleFocusKeyUp = ({ target, keyCode }) => {
     if (
-      document.activeElement === this.ref &&
-      (e.keyCode === 32 || e.keyCode === 13) // handle Space and Enter keys
+      target === document.activeElement &&
+      (keyCode === 32 || keyCode === 13)
     ) {
       this.handleClick()
     }
@@ -46,7 +44,6 @@ class TabItem extends Component {
         tabIndex="0"
         active={active}
         tabsNumber={tabsNumber}
-        innerRef={this.getTabRef}
         onClick={this.handleClick}
         onKeyUp={this.handleFocusKeyUp}
       >

@@ -1,19 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react'
 
-const Icon = ({
-  name,
-  className,
-  width,
-  height,
-  onClick,
-  tabIndex,
-}) => (
-  <span
-    onClick={onClick}
-    tabIndex={tabIndex}
-    className={className}
-  >
+const Icon = ({ name, width, height, ...rest }) => (
+  <span {...rest}>
     <svg width={width} height={height}>
       <use xlinkHref={`#${name}`} />
     </svg>

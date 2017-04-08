@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`action utils createActionBinded creates action with already binded dispatch 1`] = `
+Object {
+  "value": 7,
+}
+`;
+
+exports[`action utils promisifyAction wraps action into a promise with resolve fn in meta 1`] = `
+Object {
+  "value": 7,
+}
+`;

@@ -21,14 +21,15 @@ const InputWrapper = styled.div`
 `
 const Input = styled.input`
   width: 100%;
-  margin: 0 0 1px 0;
+  margin: 0;
   padding: 0;
   border: 0;
   outline: none;
   appearance: none;
 `
 const EditIcon = styled(Icon)`
-  padding-left: 8px;
+  margin-left: 4px;
+  padding-left: 4px;
   cursor: pointer;
   color: #828282;
 
@@ -63,6 +64,7 @@ const Textinput = ({
   handleBlur,
   placeholder,
   handleEditClick,
+  handleFocusKeyUp,
   handleInputKeyUp,
   handleRemoveClick,
 }) => {
@@ -80,14 +82,18 @@ const Textinput = ({
   }
 
   return (
-    <div onFocus={handleEditClick} className={className}>
-      <InputValue required={required}>
+    <div className={className}>
+      <InputValue
+        tabIndex="0"
+        required={required}
+        onFocus={handleEditClick}
+      >
         {input.value || <Placeholder>{placeholder}</Placeholder>}
-      </InputValue> <EditIcon
+      </InputValue>
+      <EditIcon
         width="8"
         height="12"
         name="edit"
-        tabIndex="0"
         onClick={handleEditClick}
       />
       {
@@ -96,6 +102,8 @@ const Textinput = ({
           width="10"
           height="12"
           name="delete"
+          tabIndex="0"
+          onKeyUp={handleFocusKeyUp}
           onClick={handleRemoveClick}
         />
       }
@@ -118,6 +126,14 @@ export default compose(
     handleInputKeyUp: ({ input, setEditMode }) => e => {
       if (e.keyCode === 27 || e.keyCode === 13) { // handle Esc and Enter keys
         exitEditMode(input, setEditMode, e)
+      }
+    },
+    handleFocusKeyUp: ({ handleRemoveClick }) => e => {
+      if (
+        e.target === document.activeElement &&
+        (e.keyCode === 32 || e.keyCode === 13)
+      ) {
+        handleRemoveClick(e)
       }
     },
     handleBlur: ({ input, setEditMode }) => e => {

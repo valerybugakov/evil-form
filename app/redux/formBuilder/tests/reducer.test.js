@@ -1,33 +1,19 @@
-import { configureStore } from 'redux/utils/configureStore'
 import { saveFormSuccess } from '../actions'
 import reducer from '../reducer'
 
 describe('formBuidler reducer', () => {
-  let store
   const existingForm = { id: 1, title: 'Test form' }
-
-  beforeEach(() => {
-    store = configureStore(reducer, { savedForms: { 1: existingForm } })
-  })
+  const initialState = { savedForms: { 1: existingForm } }
 
   it('saves new form not matched by ID', () => {
     const newForm = { id: 2, title: 'New title' }
-    saveFormSuccess(newForm)
-
-    expect(store.getState()).toEqual({
-      savedForms: {
-        1: existingForm,
-        2: newForm,
-      },
-    })
+    const next = reducer(initialState, saveFormSuccess(newForm))
+    expect(next).toMatchSnapshot()
   })
 
   it('updates existing form matched by ID', () => {
     const updatedForm = { id: 1, title: 'New title' }
-    saveFormSuccess(updatedForm)
-
-    expect(store.getState()).toEqual({
-      savedForms: { 1: updatedForm },
-    })
+    const next = reducer(initialState, saveFormSuccess(updatedForm))
+    expect(next).toMatchSnapshot()
   })
 })

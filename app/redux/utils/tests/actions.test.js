@@ -14,9 +14,10 @@ describe('action utils', () => {
       })
 
       const store = configureStore(reducer, { value: 0 })
-
       testAction(7)
-      expect(store.getState()).toEqual({ value: 7 })
+
+      expect(testAction.assigned()).toBe(true)
+      expect(store.getState()).toMatchSnapshot()
     })
   })
 
@@ -36,7 +37,8 @@ describe('action utils', () => {
       const value = await promisifyAction(testAction, 7)
 
       expect(value).toEqual(7)
-      expect(store.getState()).toEqual({ value: 7 })
+      expect(testAction.assigned()).toBe(true)
+      expect(store.getState()).toMatchSnapshot()
     })
   })
 })

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`formBuidler reducer saves new form not matched by ID 1`] = `
+Object {
+  "savedForms": Object {
+    "1": Object {
+      "id": 1,
+      "title": "Test form",
+    },
+    "2": Object {
+      "id": 2,
+      "title": "New title",
+    },
+  },
+}
+`;
+
+exports[`formBuidler reducer updates existing form matched by ID 1`] = `
+Object {
+  "savedForms": Object {
+    "1": Object {
+      "id": 1,
+      "title": "New title",
+    },
+  },
+}
+`;
