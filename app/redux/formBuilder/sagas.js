@@ -1,5 +1,5 @@
-import { call } from 'redux-saga/effects'
-import { takeLatest, delay } from 'redux-saga'
+import { delay } from 'redux-saga'
+import { takeLatest, call } from 'redux-saga/effects'
 import { redirect } from 'redux/utils/redirect'
 import { saveForm, saveFormSuccess, saveFormFailure } from './actions'
 
