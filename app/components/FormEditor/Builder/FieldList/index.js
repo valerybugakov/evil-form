@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { animateScroll } from 'react-scroll'
 import { SortableContainer } from 'react-sortable-hoc'
-import { media } from 'styles'
+import { media, COLORS } from 'styles'
 import FieldEditor from './FieldEditor'
 
 const Table = styled.table`
@@ -25,9 +25,10 @@ const TableHead = styled.thead`
 `
 const ColumnTitle = styled.th`
   padding-bottom: 17.3px;
-  font-size: 9.9px;
+  font-size: 12px;
   font-weight: normal;
   text-transform: uppercase;
+  color: ${COLORS.INACTIVE};
 `
 const DragColumn = ColumnTitle.extend`
   width: 26px;
@@ -51,13 +52,13 @@ const ChoicesColumn = ColumnTitle.extend`
   width: 25%;
 `
 const RequiredColumn = ColumnTitle.extend`
-  width: 10%;
+  width: 60px;
 `
 const RemoveColumn = ColumnTitle.extend`
-  width: 39px;
+  width: 14px;
 
   @media (min-width: 64em) and (max-width: 80em) {
-    width: 6%;
+    width: 3%;
   }
 `
 
@@ -80,7 +81,7 @@ class FieldList extends Component {
           <tr>
             <DragColumn />
             <TitleColumn>Question title</TitleColumn>
-            <ChoicesColumn>Choices</ChoicesColumn>
+            <ChoicesColumn>Preview</ChoicesColumn>
             <RequiredColumn>Required?</RequiredColumn>
             <RemoveColumn />
           </tr>

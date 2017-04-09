@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field } from 'redux-form'
 import styled from 'styled-components'
-import { withFieldRemoveHandler } from 'utils/form'
+import { required, withFieldRemoveHandler } from 'utils/form'
 import { media, COLORS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 
@@ -17,19 +17,19 @@ const OptionContainer = styled.div`
   `}
 `
 const TypeIndicator = styled.div`
-  width: 12px;
-  height: 12px;
-  margin-top: 1px;
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
   margin-right: 5px;
   border: solid 1px ${COLORS.BORDER};
 
   ${props => props.fieldType === 'radio' && `
-    border-radius: 6px;
+    border-radius: 8px;
   `}
 
   ${props => props.fieldType === 'select' && `
     height: 0;
-    margin-top: 6px;
+    margin-top: 9px;
     border-top-width: 0;
   `}
 
@@ -59,6 +59,7 @@ const OptionItem = ({ input, type, handleRemoveClick }) => (
       name={input}
       component={Textinput}
       handleRemoveClick={handleRemoveClick}
+      validate={[required]}
     />
   </OptionContainer>
 )

@@ -1,26 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withState, withHandlers } from 'recompose'
-import { COLORS, growWidth } from 'styles'
+import { withHandlers } from 'recompose'
+import { COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 
 const InputWrapper = styled.div`
   position: relative;
 
+  &:before {
+    display: ${props => props.required ? 'inline-block' : 'none'};
+    content: '*';
+    color: #ff0000;
+    margin-right: 4px;
+  }
+
   &::after {
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: -3px;
     display: block;
-    width: 100%;
+    width: ${props => props.handleRemoveClick ? 'calc(100% - 18px)' : '100%'};
     height: 0;
     content: '';
-    border-bottom: 1px solid ${COLORS.BORDER};
-    animation: ${growWidth} 0.4s ease-out;
+    border-bottom: 1px solid;
+    border-color: ${props => props.error ? COLORS.BORDER_ERROR : COLORS.BORDER};
+    transition: border-color 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   }
 `
 const Input = styled.input`
-  width: 100%;
+  width: ${props => props.required ? 'calc(100% - 15px)' : '100%'};
   margin: 0;
   padding: 0;
   border: 0;
@@ -42,103 +50,49 @@ const RemoveIcon = EditIcon.extend`
     color: ${COLORS.REMOVE};
   }
 `
-const InputValue = styled.span`
-  word-break: break-word;
-
-  &:after {
-    display: ${props => props.required ? 'inline' : 'none'};
-    content: '*';
-    color: #ff0000;
-    margin-left: 4px;
-  }
-`
-const Placeholder = styled.span`
-  color: ${COLORS.INACTIVE};
-`
 
 const Textinput = ({
   input,
   required,
   className,
-  inEditMode,
-  handleBlur,
   placeholder,
-  handleEditClick,
   handleFocusKeyUp,
-  handleInputKeyUp,
   handleRemoveClick,
-}) => {
-  if (inEditMode) {
-    return (
-      <InputWrapper className={className}>
-        <Input
-          autoFocus
-          {...input}
-          onBlur={handleBlur}
-          onKeyUp={handleInputKeyUp}
-        />
-      </InputWrapper>
-    )
-  }
-
-  return (
-    <div className={className}>
-      <InputValue
+  meta: { error },
+}) => (
+  <InputWrapper
+    error={error}
+    required={required}
+    className={className}
+    handleRemoveClick={handleRemoveClick}
+  >
+    <Input
+      autoFocus
+      {...input}
+      required={required}
+      placeholder={placeholder}
+    />
+    {
+      handleRemoveClick &&
+      <RemoveIcon
+        width="12"
+        height="14"
+        name="delete"
         tabIndex="0"
-        required={required}
-        onFocus={handleEditClick}
-      >
-        {input.value || <Placeholder>{placeholder}</Placeholder>}
-      </InputValue>
-      <EditIcon
-        width="8"
-        height="12"
-        name="edit"
-        onClick={handleEditClick}
+        onKeyUp={handleFocusKeyUp}
+        onClick={handleRemoveClick}
       />
-      {
-        handleRemoveClick &&
-        <RemoveIcon
-          width="10"
-          height="12"
-          name="delete"
-          tabIndex="0"
-          onKeyUp={handleFocusKeyUp}
-          onClick={handleRemoveClick}
-        />
-      }
-    </div>
-  )
-}
+    }
+  </InputWrapper>
+)
 
-const exitEditMode = (input, setEditMode, e) => {
-  input.onBlur(e.target.value)
-  setEditMode(false)
-}
-
-export default compose(
-  withState(
-    'inEditMode',
-    'setEditMode',
-    ({ inEditMode, input }) => inEditMode && !input.value
-  ),
-  withHandlers({
-    handleInputKeyUp: ({ input, setEditMode }) => e => {
-      if (e.keyCode === 27 || e.keyCode === 13) { // handle Esc and Enter keys
-        exitEditMode(input, setEditMode, e)
-      }
-    },
-    handleFocusKeyUp: ({ handleRemoveClick }) => e => {
-      if (
-        e.target === document.activeElement &&
-        (e.keyCode === 32 || e.keyCode === 13)
-      ) {
-        handleRemoveClick(e)
-      }
-    },
-    handleBlur: ({ input, setEditMode }) => e => {
-      exitEditMode(input, setEditMode, e)
-    },
-    handleEditClick: ({ setEditMode }) => _ => setEditMode(true),
-  }),
-)(Textinput)
+export default withHandlers({
+  handleFocusKeyUp: ({ handleRemoveClick }) => e => {
+    if (
+      e.target === document.activeElement &&
+      (e.keyCode === 32 || e.keyCode === 13)
+    ) {
+      handleRemoveClick(e)
+    }
+  },
+})(Textinput)

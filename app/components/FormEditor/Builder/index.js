@@ -5,16 +5,17 @@ import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
 import { promisifyAction } from 'redux/utils'
 import { saveForm } from 'redux/formBuilder/actions'
+import { required } from 'utils/form'
 import { allWithPositiveLength, hasDuplicates } from 'utils'
-import { media, actionButtonCSS } from 'styles'
+import { media, actionButtonCSS, COLORS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
 
 const FormContainer = styled.main`
-  width: 66.66%;
-  margin-left: 33.33%;
-  padding: 54px 50px 0 50px;
+  width: calc(100% - 280px);
+  margin-left: 280px;
+  padding: 20px;
 
   ${media.upToMedium`
     width: 100%;
@@ -24,16 +25,17 @@ const FormContainer = styled.main`
 `
 const Form = styled.form`
   height: 100%;
-  padding: 13px 50px;
+  padding: 25px 40px;
   background: #fff;
+  font-size: 14px;
 
   ${media.upToPhone`
     padding: 13px 15px;
   `}
 `
 const TitleField = styled(Field)`
-  width: calc(100% - 115px);
-  font-size: 15px;
+  width: calc(100% - 150px);
+  font-size: 18px;
   font-weight: normal;
 `
 const HeadingRow = styled.div`
@@ -46,14 +48,13 @@ const ErrorMessage = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 34px; /* 55px */
+  height: 55px;
   margin-bottom: 22.9px;
   padding: 0 25px;
-  color: #973133;
-  font-size: 12px;
+  color: ${COLORS.ERROR};
   background-color: #f2dede;
   border-radius: 4px;
-  border: solid 1px #ebcccc;
+  border: solid 1px ${COLORS.BORDER_ERROR};
 `
 const SaveButton = styled.button`
   ${actionButtonCSS}
@@ -86,6 +87,7 @@ const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
           name="title"
           component={Textinput}
           placeholder="Form Title"
+          validate={required}
         />
         <SaveButton
           type="submit"
@@ -94,11 +96,8 @@ const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
           Save form
         </SaveButton>
       </HeadingRow>
-      {
-        error
-          ? <ErrorMessage>{error}</ErrorMessage>
-          : <DescriptionRow />
-      }
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <DescriptionRow />
       <FieldArray
         name="fields"
         component={FieldList}

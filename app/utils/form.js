@@ -1,5 +1,7 @@
 import { withHandlers } from 'recompose'
 
+export const required = value => value ? undefined : 'Required'
+
 export const withFieldAddHandler = ({ payload }) => withHandlers({
   handleAddClick: ({ fields }) => e => {
     e.preventDefault()

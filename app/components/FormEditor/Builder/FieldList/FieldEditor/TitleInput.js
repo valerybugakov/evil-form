@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import { injectBuilderValues } from 'redux/utils'
 
 const TitleField = styled(Field)`
-  width: 85%;
-  font-size: 11.3px;
+  width: 90%;
 `
 
 export default injectBuilderValues(({ inputPath }) => ({

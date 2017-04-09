@@ -12,12 +12,12 @@ const HiddenInput = styled.input`
 `
 const CheckIcon = styled(Icon)`
   display: block;
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
   color: #7d88d4;
   font-size: 1px;
-  line-height: 10px;
+  line-height: 13px;
   text-align: center;
   border: 1px solid ${COLORS.BORDER};
 

@@ -6,17 +6,16 @@ import { Link } from 'react-router-dom'
 import { actionButtonCSS, COLORS } from 'styles'
 
 const Container = styled.main`
-  padding: 25px;
-  font-size: 10px;
+  padding: 86px 25px;
 `
 const PageTitle = styled.h1`
   margin: 0 0 15px 0;
-  font-size: 15px;
+  font-size: 18px;
   color: ${COLORS.PRIMARY};
 `
 const FormList = styled.ul`
   margin-bottom: 30px;
-  padding-left: 10px;
+  padding-left: 20px;
 `
 const FormItem = styled.li`
   margin-bottom: 5px;
@@ -32,7 +31,6 @@ const FormLink = styled(Link)`
 const CreateNewButton = styled(Link)`
   ${actionButtonCSS}
   display: block;
-  font-size: 12px;
   text-decoration: none;
   text-align: center;
   line-height: 26.9px;

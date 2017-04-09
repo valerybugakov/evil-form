@@ -3,10 +3,10 @@ import { Field } from 'redux-form'
 import styled from 'styled-components'
 import { SortableElement } from 'react-sortable-hoc'
 import { compose, shouldUpdate } from 'recompose'
-import { withFieldRemoveHandler } from 'utils/form'
+import { required, withFieldRemoveHandler } from 'utils/form'
 import { fieldTypes } from 'redux/constants'
 import { injectBuilderValues } from 'redux/utils'
-import { buttonReset, media, COLORS } from 'styles'
+import { media, COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 import Textinput from 'components/shared/Textinput'
 import Checkbox from 'components/shared/Checkbox'
@@ -29,7 +29,6 @@ const TableRow = styled.tr`
 `
 const TableCell = styled.td`
   padding-bottom: 20.3px;
-  font-size: 10px;
 
   ${media.upToPhone`
     display: flex;
@@ -91,13 +90,13 @@ const DragIcon = styled(Icon)`
 const RequiredField = styled(Field)`
   margin-top: 1px;
 `
-const DeleteButton = styled.button`
-  ${buttonReset}
-  width: 39px;
-  color: ${COLORS.REMOVE};
+const RemoveIcon = styled(Icon)`
+  float: right;
+  cursor: pointer;
+  color: #828282;
 
   &:hover {
-    color: #ff5e7a;
+    color: ${COLORS.REMOVE};
   }
 `
 
@@ -125,6 +124,7 @@ const FieldEditor = ({
           component={Textinput}
           name={`${input}.title`}
           placeholder="Question title"
+          validate={[required]}
         />
       </TitleCell>
       <ChoicesCell data-label="Choices">
@@ -141,9 +141,13 @@ const FieldEditor = ({
         />
       </RequiredCell>
       <TableCell>
-        <DeleteButton onClick={handleRemoveClick}>
-          Remove
-        </DeleteButton>
+        <RemoveIcon
+          width="14"
+          height="18"
+          name="delete"
+          tabIndex="0"
+          onClick={handleRemoveClick}
+        />
       </TableCell>
     </TableRow>
   )

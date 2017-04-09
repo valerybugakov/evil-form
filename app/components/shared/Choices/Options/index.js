@@ -6,7 +6,8 @@ import Item from './Item'
 
 const AddOptionButton = styled.button`
   ${buttonReset}
-  font-size: 10px;
+  margin-top: 5px;
+  font-size: 14px;
   color: ${COLORS.HIGHLIGHTED_DISABLED};
 
   &:hover {
@@ -28,7 +29,7 @@ const Options = ({ fields, type, handleAddClick }) => (
       ))
     }
     <AddOptionButton onClick={handleAddClick}>
-      + Add Choice
+      + Add Option
     </AddOptionButton>
   </div>
 )
