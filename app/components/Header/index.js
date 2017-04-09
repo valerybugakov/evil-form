@@ -8,7 +8,7 @@ const Container = styled.header`
   display: flex;
   width: 100%;
   height: 64px;
-  align-items: baseline;
+  align-items: center;
   margin: 0;
   padding: 18px 25px;
   background-color: ${COLORS.HIGHLIGHTED};

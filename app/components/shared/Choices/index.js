@@ -10,6 +10,7 @@ const ChoiceLabel = styled.div`
   padding: 4px 7px;
   margin-top: -3px;
   font-family: 'Helvetica Neue', Helvetica, 'Open Sans', sans-serif;
+  line-height: 19px;
   color: #999999;
   border-radius: 4px;
   border: solid 1px #ccc;

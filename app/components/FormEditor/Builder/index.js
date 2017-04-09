@@ -27,7 +27,6 @@ const Form = styled.form`
   height: 100%;
   padding: 25px 40px;
   background: #fff;
-  font-size: 14px;
 
   ${media.upToPhone`
     padding: 13px 15px;

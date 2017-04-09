@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { withHandlers } from 'recompose'
-import { COLORS } from 'styles'
+import { media, COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 
 const InputWrapper = styled.div`
@@ -25,6 +25,11 @@ const InputWrapper = styled.div`
     border-bottom: 1px solid;
     border-color: ${props => props.error ? COLORS.BORDER_ERROR : COLORS.BORDER};
     transition: border-color 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+    ${media.upToPhone`
+      left: auto;
+      right: 0;
+    `}
   }
 `
 const Input = styled.input`

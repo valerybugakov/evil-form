@@ -38,6 +38,7 @@ const TableCell = styled.td`
       display: block;
       content: attr(data-label);
       text-transform: uppercase;
+      color: ${COLORS.INACTIVE};
     }
 
     &:first-child {
@@ -127,7 +128,7 @@ const FieldEditor = ({
           validate={[required]}
         />
       </TitleCell>
-      <ChoicesCell data-label="Choices">
+      <ChoicesCell data-label="Preview">
         <Choices
           input={input}
           type={fieldType}
