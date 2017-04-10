@@ -1,9 +1,10 @@
 import React from 'react'
 import { Field } from 'redux-form'
+import { get, map } from 'lodash/fp'
 import styled from 'styled-components'
 import { SortableElement } from 'react-sortable-hoc'
 import { compose, shouldUpdate } from 'recompose'
-import { required, withFieldRemoveHandler } from 'utils/form'
+import { required, uniq, withFieldRemoveHandler } from 'utils/form'
 import { fieldTypes } from 'redux/constants'
 import { injectBuilderValues } from 'redux/utils'
 import { media, COLORS } from 'styles'
@@ -25,14 +26,24 @@ const TableRow = styled.tr`
     pointer-events: auto !important;
     color: #4f4f4f;
     background-color: hsla(0, 0%, 100%, 0.8);
+
+    ${media.upToPhone`
+      font-size: 12px;
+
+      textarea:enabled,
+      input:enabled {
+        font-size: 16px;
+      }
+    `}
   }
 `
 const TableCell = styled.td`
-  padding-bottom: 20.3px;
+  padding-bottom: 35px;
 
   ${media.upToPhone`
     display: flex;
     justify-content: space-between;
+    padding-bottom: 25px;
 
     &:before {
       display: block;
@@ -56,7 +67,7 @@ const TableCell = styled.td`
 const TitleCell = TableCell.extend`
   ${media.downToPhone`
     .draggable-helper & {
-      width: 55%;
+      width: 60%;
     }
   `}
 `
@@ -77,8 +88,11 @@ const RequiredCell = TableCell.extend`
 const DragIcon = styled(Icon)`
   display: block;
   width: 26px;
-  margin-top: -4px;
-  color: #dadada;
+  color: ${COLORS.INACTIVE};
+
+  &:hover {
+    color: ${COLORS.HIGHLIGHTED};
+  }
 
   & > svg {
     cursor: pointer;
@@ -122,10 +136,11 @@ const FieldEditor = ({
       <TitleCell data-label="Title">
         <TitleInput
           inputPath={input}
+          errorLabel="Title"
           component={Textinput}
           name={`${input}.title`}
           placeholder="Question title"
-          validate={[required]}
+          validate={[required, uniq(input, map(get('title')))]}
         />
       </TitleCell>
       <ChoicesCell data-label="Preview">

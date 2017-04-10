@@ -6,7 +6,7 @@ import Item from './Item'
 
 const AddOptionButton = styled.button`
   ${buttonReset}
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 14px;
   color: ${COLORS.HIGHLIGHTED_DISABLED};
 
@@ -14,8 +14,18 @@ const AddOptionButton = styled.button`
     color: ${COLORS.HIGHLIGHTED};
   }
 `
+const Error = styled.div`
+  width: 190px;
+  color: ${COLORS.ERROR};
+  font-size: 14px;
+`
 
-const Options = ({ fields, type, handleAddClick }) => (
+const Options = ({
+  fields,
+  type,
+  handleAddClick,
+  meta: { error },
+}) => (
   <div>
     {
       fields.map((input, index) => (
@@ -28,6 +38,7 @@ const Options = ({ fields, type, handleAddClick }) => (
         />
       ))
     }
+    {error && <Error>Options {error}</Error>}
     <AddOptionButton onClick={handleAddClick}>
       + Add Option
     </AddOptionButton>

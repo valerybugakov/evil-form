@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { actionButtonCSS, COLORS } from 'styles'
 
 const Container = styled.main`
-  padding: 86px 25px;
+  padding: 25px;
 `
 const PageTitle = styled.h1`
   margin: 0 0 15px 0;

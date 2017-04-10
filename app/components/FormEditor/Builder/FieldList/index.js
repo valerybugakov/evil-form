@@ -61,6 +61,9 @@ const RemoveColumn = ColumnTitle.extend`
     width: 3%;
   }
 `
+const Error = styled.div`
+  color: ${COLORS.ERROR};
+`
 
 @SortableContainer
 class FieldList extends Component {
@@ -74,6 +77,12 @@ class FieldList extends Component {
   render() {
     if (this.shouldScroll) animateScroll.scrollToBottom()
     const { fields } = this.props
+
+    if (fields.length === 0) {
+      return (
+        <Error>{'<-'} Form should contain at least one question</Error>
+      )
+    }
 
     return (
       <Table>

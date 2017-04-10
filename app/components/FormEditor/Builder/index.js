@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, map, filter, get, identity } from 'lodash/fp'
 import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
 import { dispatch } from 'redux/store'
 import { promisifyAction } from 'redux/utils'
 import { saveForm } from 'redux/formBuilder/actions'
-import { required } from 'utils/form'
-import { allWithPositiveLength, hasDuplicates } from 'utils'
-import { media, actionButtonCSS, COLORS } from 'styles'
+import { required, hasItems } from 'utils/form'
+import { media, actionButtonCSS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
@@ -25,7 +23,7 @@ const FormContainer = styled.main`
 `
 const Form = styled.form`
   height: 100%;
-  padding: 25px 40px;
+  padding: 25px 40px 50px 45px;
   background: #fff;
 
   ${media.upToPhone`
@@ -42,18 +40,6 @@ const HeadingRow = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 21px;
-`
-const ErrorMessage = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 55px;
-  margin-bottom: 22.9px;
-  padding: 0 25px;
-  color: ${COLORS.ERROR};
-  background-color: #f2dede;
-  border-radius: 4px;
-  border: solid 1px ${COLORS.BORDER_ERROR};
 `
 const SaveButton = styled.button`
   ${actionButtonCSS}
@@ -75,7 +61,7 @@ const preventSubmitOnEnter = e => {
   }
 }
 
-const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
+const Builder = ({ handleSubmit, className, submitting, pristine, valid }) => (
   <FormContainer
     className={className}
     onKeyDown={preventSubmitOnEnter}
@@ -86,16 +72,16 @@ const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
           name="title"
           component={Textinput}
           placeholder="Form Title"
+          errorLabel="Form Title"
           validate={required}
         />
         <SaveButton
           type="submit"
-          disabled={!!error || submitting || pristine}
+          disabled={!valid || submitting || pristine}
         >
           Save form
         </SaveButton>
       </HeadingRow>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
       <DescriptionRow />
       <FieldArray
         name="fields"
@@ -104,66 +90,13 @@ const Builder = ({ handleSubmit, className, error, submitting, pristine }) => (
         useWindowAsScrollContainer
         helperClass="draggable-helper"
         shouldCancelStart={shouldCancelStart}
+        validate={hasItems}
       />
     </Form>
   </FormContainer>
 )
 
-/* eslint-disable consistent-return, no-restricted-syntax */
-const validateEmptyAndUniq = (fieldLabel, values) => {
-  const valuesNotEmpty = allWithPositiveLength(values)
-
-  if (!valuesNotEmpty) {
-    return `${fieldLabel} must be non empty`
-  }
-
-  const valuesUniq = !hasDuplicates(values)
-
-  if (!valuesUniq) {
-    return `${fieldLabel} must be uniq`
-  }
-}
-
-const formValueVaidators = [
-  (_, title) => {
-    if (title.length === 0) {
-      return 'Form title must be non empty'
-    }
-  },
-  fields => {
-    if (fields.length === 0) {
-      return 'Form should have at least one field'
-    }
-  },
-  fields => {
-    const titles = map(get('title'), fields)
-    return validateEmptyAndUniq('Question titles', titles)
-  },
-  fields => {
-    const optionFields = compose(filter(identity), map(get('options')))(fields)
-
-    for (const options of optionFields) {
-      const message = options.length === 0
-        ? 'Choices must be non empty'
-        : validateEmptyAndUniq('Choices', options)
-
-      if (message) return message
-    }
-  },
-]
-/* eslint-enable consistent-return, no-restricted-syntax */
-
 export default reduxForm({
   form: 'formBuilder',
   onSubmit: values => promisifyAction(saveForm, values),
-  validate: ({ title = '', fields = [] }) => {
-    const error = {}
-
-    formValueVaidators.some(validate => {
-      error._error = validate(fields, title)
-      return error._error
-    })
-
-    return error
-  },
 })(Builder)

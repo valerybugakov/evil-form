@@ -8,8 +8,7 @@ export const COLORS = {
   INACTIVE: '#bfbfbf',
   BORDER: '#e5e5e5',
   REMOVE: '#ff8ca0',
-  ERROR: '#973133',
-  BORDER_ERROR: '#d2a4a4',
+  ERROR: '#de3226',
 }
 
 export const screenSizes = {
@@ -23,25 +22,20 @@ export const screenSizes = {
 
 export const actionButtonCSS = css`
   width: 118px;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  border-radius: 4px;
-  border: none;
-
-  opacity: ${props => props.disabled ? '0.5' : '1'};
   padding: 8px 0;
-  color: white;
-  background: #5269ff;
-  box-shadow:
-    0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  color: ${COLORS.HIGHLIGHTED};
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  opacity: ${props => props.disabled ? '0.5' : '1'};
+  border-radius: 4px;
+  border: 1px solid ${COLORS.HIGHLIGHTED};
+  background: white;
 
   &:hover {
-    color: #fff;
-    background-image: radial-gradient(
-      circle at 50% 51%,
-      #9aa5ec,
-      ${COLORS.HIGHLIGHTED}
-    );
+    color: white;
+    background: ${COLORS.HIGHLIGHTED};
+    box-shadow:
+      2px 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 1px 5px 0 rgba(0, 0, 0, 0.12);
   }
 `

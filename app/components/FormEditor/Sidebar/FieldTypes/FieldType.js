@@ -21,8 +21,8 @@ const Field = styled.button`
 
   &:hover {
     color: white;
-    background-color: #d47dc1;
-    border-color: #d47dc1;
+    background-color: ${COLORS.HIGHLIGHTED};
+    border-color: ${COLORS.HIGHLIGHTED};
   }
 
   ${media.upToMedium`

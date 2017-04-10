@@ -21,6 +21,10 @@ const CheckIcon = styled(Icon)`
   text-align: center;
   border: 1px solid ${COLORS.BORDER};
 
+  &:hover {
+    border-color: ${COLORS.HIGHLIGHTED};
+  }
+
   & > svg {
     display: none;
   }

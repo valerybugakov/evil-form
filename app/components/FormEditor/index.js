@@ -8,7 +8,6 @@ import Builder from './Builder'
 
 const EditorContainer = styled.div`
   display: flex;
-  padding-top: 64px;
   min-height: 100vh;
 
   ${media.upToMedium`
