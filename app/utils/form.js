@@ -4,7 +4,7 @@ import { compose, filter, get, identity } from 'lodash/fp'
 export const required = value => value ? undefined : 'required'
 
 export const hasItems = value =>
-  value && value.length ? undefined : 'must be non empty'
+  value && value.length ? undefined : 'must not be empty'
 
 export const uniq = (path, getter = identity) => (maybeUniq, allValues) => {
   const matches = compose(

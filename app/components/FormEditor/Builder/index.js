@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { reduxForm, Field, FieldArray, arrayMove } from 'redux-form'
-import { dispatch } from 'redux/store'
+import { reduxForm, Field, FieldArray } from 'redux-form'
 import { promisifyAction } from 'redux/utils'
 import { saveForm } from 'redux/formBuilder/actions'
 import { required, hasItems } from 'utils/form'
@@ -45,16 +44,6 @@ const SaveButton = styled.button`
   ${actionButtonCSS}
 `
 
-const shouldCancelStart = ({ target }) => (
-  !Array.prototype.includes.call(target.parentNode.classList, 'draggable')
-)
-
-const onSortEnd = ({ oldIndex, newIndex }) => {
-  if (oldIndex !== newIndex) {
-    dispatch(arrayMove('formBuilder', 'fields', oldIndex, newIndex))
-  }
-}
-
 const preventSubmitOnEnter = e => {
   if (e.keyCode === 13) {
     e.preventDefault()
@@ -86,10 +75,6 @@ const Builder = ({ handleSubmit, className, submitting, pristine, valid }) => (
       <FieldArray
         name="fields"
         component={FieldList}
-        onSortEnd={onSortEnd}
-        useWindowAsScrollContainer
-        helperClass="draggable-helper"
-        shouldCancelStart={shouldCancelStart}
         validate={hasItems}
       />
     </Form>

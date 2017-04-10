@@ -19,6 +19,7 @@ const Input = styled.input`
   margin: 0;
   padding: 4px 0;
   border: 0;
+  border-radius: 0;
   outline: none;
   appearance: none;
   border-bottom: 1px solid;
@@ -46,10 +47,11 @@ const RemoveIcon = EditIcon.extend`
 `
 const MetaInfo = styled.span`
   position: absolute;
+  left: 0;
+  bottom: -18px;
   display: block;
   width: 100%;
   padding-top: 6px;
-  bottom: -18px;
   font-size: 12px;
   color: ${props => props.error ? COLORS.ERROR : COLORS.SECONDARY};
 `
@@ -62,7 +64,7 @@ const Textinput = ({
   placeholder,
   handleFocusKeyUp,
   handleRemoveClick,
-  meta: { error },
+  meta: { error, dirty, touched },
 }) => (
   <InputWrapper
     required={required}
@@ -72,11 +74,14 @@ const Textinput = ({
     <Input
       autoFocus
       {...input}
-      error={error}
+      error={error && (dirty || touched)}
       required={required}
       placeholder={placeholder}
     />
-    {error && <MetaInfo error={error}>{errorLabel} {error}</MetaInfo>}
+    {
+      error && (dirty || touched) &&
+      <MetaInfo error={error}>{errorLabel} {error}</MetaInfo>
+    }
     {
       handleRemoveClick &&
       <RemoveIcon

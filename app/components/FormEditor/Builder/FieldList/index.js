@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { arrayMove } from 'redux-form'
 import { animateScroll } from 'react-scroll'
-import { SortableContainer } from 'react-sortable-hoc'
+import { dispatch } from 'redux/store'
 import { media, COLORS } from 'styles'
-import FieldEditor from './FieldEditor'
+import TableBody from './TableBody'
 
 const Table = styled.table`
   width: 100%;
@@ -32,40 +33,37 @@ const ColumnTitle = styled.th`
 `
 const DragColumn = ColumnTitle.extend`
   width: 26px;
-
-  @media (min-width: 64em) and (max-width: 80em) {
-    width: 4%;
-  }
 `
 const TitleColumn = ColumnTitle.extend`
-  width: 55%;
+  width: 65%;
 
   ${media.upToSmall`
     width: 45%;
   `}
-
-  @media (min-width: 64em) and (max-width: 80em) {
-    width: 45%;
-  }
 `
 const ChoicesColumn = ColumnTitle.extend`
-  width: 25%;
+  width: 35%;
 `
 const RequiredColumn = ColumnTitle.extend`
-  width: 60px;
+  width: 65px;
 `
 const RemoveColumn = ColumnTitle.extend`
   width: 14px;
-
-  @media (min-width: 64em) and (max-width: 80em) {
-    width: 3%;
-  }
 `
 const Error = styled.div`
   color: ${COLORS.ERROR};
 `
 
-@SortableContainer
+const shouldCancelStart = ({ target }) => (
+  !Array.prototype.includes.call(target.parentNode.classList, 'draggable')
+)
+
+const onSortEnd = ({ oldIndex, newIndex }) => {
+  if (oldIndex !== newIndex) {
+    dispatch(arrayMove('formBuilder', 'fields', oldIndex, newIndex))
+  }
+}
+
 class FieldList extends Component {
   shouldScroll = false // eslint-disable-line react/sort-comp
 
@@ -95,18 +93,13 @@ class FieldList extends Component {
             <RemoveColumn />
           </tr>
         </TableHead>
-        <tbody>
-          {
-            fields.map((input, index) => (
-              <FieldEditor
-                key={input}
-                input={input}
-                index={index}
-                fields={fields}
-              />
-            ))
-          }
-        </tbody>
+        <TableBody
+          fields={fields}
+          onSortEnd={onSortEnd}
+          useWindowAsScrollContainer
+          helperClass="draggable-helper"
+          shouldCancelStart={shouldCancelStart}
+        />
       </Table>
     )
   }
