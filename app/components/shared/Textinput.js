@@ -1,31 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withState, withHandlers } from 'recompose'
-import { COLORS, growWidth } from 'styles'
+import { withHandlers } from 'recompose'
+import { COLORS } from 'styles'
 import Icon from 'components/shared/Icon'
 
 const InputWrapper = styled.div`
   position: relative;
 
-  &::after {
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    display: block;
-    width: 100%;
-    height: 0;
-    content: '';
-    border-bottom: 1px solid ${COLORS.BORDER};
-    animation: ${growWidth} 0.4s ease-out;
+  &:before {
+    display: ${props => props.required ? 'inline-block' : 'none'};
+    content: '*';
+    color: #ff0000;
+    margin-right: 4px;
   }
 `
 const Input = styled.input`
-  width: 100%;
+  width: ${props => props.required ? 'calc(100% - 15px)' : '100%'};
   margin: 0;
-  padding: 0;
+  padding: 4px 0;
   border: 0;
+  border-radius: 0;
   outline: none;
   appearance: none;
+  border-bottom: 1px solid ${props => props.error
+    ? COLORS.ERROR
+    : 'transparent'
+  };
+
+  ${InputWrapper}:hover & {
+    border-color: ${props => props.error ? COLORS.ERROR : COLORS.BORDER};
+  }
+
+  ${InputWrapper} &:focus {
+    border-color: ${props => props.error ? COLORS.ERROR : COLORS.HIGHLIGHTED};
+  }
 `
 const EditIcon = styled(Icon)`
   margin-left: 4px;
@@ -39,106 +47,67 @@ const EditIcon = styled(Icon)`
 `
 const RemoveIcon = EditIcon.extend`
   &:hover {
-    color: ${COLORS.REMOVE};
+    color: ${COLORS.REMOVE} !important;
   }
 `
-const InputValue = styled.span`
-  word-break: break-word;
-
-  &:after {
-    display: ${props => props.required ? 'inline' : 'none'};
-    content: '*';
-    color: #ff0000;
-    margin-left: 4px;
-  }
-`
-const Placeholder = styled.span`
-  color: ${COLORS.INACTIVE};
+const MetaInfo = styled.span`
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+  display: block;
+  width: 100%;
+  padding-top: 6px;
+  font-size: 12px;
+  color: ${props => props.error ? COLORS.ERROR : COLORS.SECONDARY};
 `
 
 const Textinput = ({
   input,
   required,
   className,
-  inEditMode,
-  handleBlur,
+  errorLabel,
   placeholder,
-  handleEditClick,
   handleFocusKeyUp,
-  handleInputKeyUp,
   handleRemoveClick,
-}) => {
-  if (inEditMode) {
-    return (
-      <InputWrapper className={className}>
-        <Input
-          autoFocus
-          {...input}
-          onBlur={handleBlur}
-          onKeyUp={handleInputKeyUp}
-        />
-      </InputWrapper>
-    )
-  }
-
-  return (
-    <div className={className}>
-      <InputValue
+  meta: { error, dirty, touched },
+}) => (
+  <InputWrapper
+    required={required}
+    className={className}
+    handleRemoveClick={handleRemoveClick}
+  >
+    <Input
+      autoFocus
+      {...input}
+      error={error && (dirty || touched)}
+      required={required}
+      placeholder={placeholder}
+    />
+    {
+      error && (dirty || touched) &&
+      <MetaInfo error={error}>{errorLabel} {error}</MetaInfo>
+    }
+    {
+      handleRemoveClick &&
+      <RemoveIcon
+        width="16"
+        height="18"
+        name="delete"
         tabIndex="0"
-        required={required}
-        onFocus={handleEditClick}
-      >
-        {input.value || <Placeholder>{placeholder}</Placeholder>}
-      </InputValue>
-      <EditIcon
-        width="8"
-        height="12"
-        name="edit"
-        onClick={handleEditClick}
+        onKeyUp={handleFocusKeyUp}
+        onClick={handleRemoveClick}
       />
-      {
-        handleRemoveClick &&
-        <RemoveIcon
-          width="10"
-          height="12"
-          name="delete"
-          tabIndex="0"
-          onKeyUp={handleFocusKeyUp}
-          onClick={handleRemoveClick}
-        />
-      }
-    </div>
-  )
-}
+    }
+  </InputWrapper>
+)
 
-const exitEditMode = (input, setEditMode, e) => {
-  input.onBlur(e.target.value)
-  setEditMode(false)
-}
-
-export default compose(
-  withState(
-    'inEditMode',
-    'setEditMode',
-    ({ inEditMode, input }) => inEditMode && !input.value
-  ),
-  withHandlers({
-    handleInputKeyUp: ({ input, setEditMode }) => e => {
-      if (e.keyCode === 27 || e.keyCode === 13) { // handle Esc and Enter keys
-        exitEditMode(input, setEditMode, e)
-      }
-    },
-    handleFocusKeyUp: ({ handleRemoveClick }) => e => {
-      if (
-        e.target === document.activeElement &&
-        (e.keyCode === 32 || e.keyCode === 13)
-      ) {
-        handleRemoveClick(e)
-      }
-    },
-    handleBlur: ({ input, setEditMode }) => e => {
-      exitEditMode(input, setEditMode, e)
-    },
-    handleEditClick: ({ setEditMode }) => _ => setEditMode(true),
-  }),
-)(Textinput)
+export default withHandlers({
+  handleFocusKeyUp: ({ handleRemoveClick }) => e => {
+    if (
+      e.target === document.activeElement &&
+      (e.keyCode === 32 || e.keyCode === 13)
+    ) {
+      handleRemoveClick(e)
+    }
+  },
+})(Textinput)

@@ -1,9 +1,17 @@
 import React from 'react'
+import styled from 'styled-components'
 import { fieldTypes } from 'redux/constants'
+import { media, COLORS } from 'styles'
 import FieldType from './FieldType'
 
+const Container = styled.div`
+  ${media.upToMedium`
+    border-bottom: 1px solid ${COLORS.BORDER};
+  `}
+`
+
 const FieldTypes = () => (
-  <div>
+  <Container>
     {
       Object.entries(fieldTypes).map(([type, config]) => (
         <FieldType
@@ -13,7 +21,7 @@ const FieldTypes = () => (
         />
       ))
     }
-  </div>
+  </Container>
 )
 
 export default FieldTypes

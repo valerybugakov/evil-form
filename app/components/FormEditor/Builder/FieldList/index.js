@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { arrayMove } from 'redux-form'
 import { animateScroll } from 'react-scroll'
-import { SortableContainer } from 'react-sortable-hoc'
-import { media } from 'styles'
-import FieldEditor from './FieldEditor'
+import { dispatch } from 'redux/store'
+import { media, COLORS } from 'styles'
+import TableBody from './TableBody'
 
 const Table = styled.table`
   width: 100%;
@@ -25,43 +26,37 @@ const TableHead = styled.thead`
 `
 const ColumnTitle = styled.th`
   padding-bottom: 17.3px;
-  font-size: 9.9px;
+  font-size: 12px;
   font-weight: normal;
   text-transform: uppercase;
+  color: ${COLORS.INACTIVE};
 `
 const DragColumn = ColumnTitle.extend`
   width: 26px;
-
-  @media (min-width: 64em) and (max-width: 80em) {
-    width: 4%;
-  }
 `
 const TitleColumn = ColumnTitle.extend`
-  width: 55%;
-
-  ${media.upToSmall`
-    width: 45%;
-  `}
-
-  @media (min-width: 64em) and (max-width: 80em) {
-    width: 45%;
-  }
-`
-const ChoicesColumn = ColumnTitle.extend`
-  width: 25%;
+  width: 90%;
 `
 const RequiredColumn = ColumnTitle.extend`
-  width: 10%;
+  width: 70px;
 `
 const RemoveColumn = ColumnTitle.extend`
-  width: 39px;
-
-  @media (min-width: 64em) and (max-width: 80em) {
-    width: 6%;
-  }
+  width: 14px;
+`
+const Error = styled.div`
+  color: ${COLORS.ERROR};
 `
 
-@SortableContainer
+const shouldCancelStart = ({ target }) => (
+  !Array.prototype.includes.call(target.parentNode.classList, 'draggable')
+)
+
+const onSortEnd = ({ oldIndex, newIndex }) => {
+  if (oldIndex !== newIndex) {
+    dispatch(arrayMove('formBuilder', 'fields', oldIndex, newIndex))
+  }
+}
+
 class FieldList extends Component {
   shouldScroll = false // eslint-disable-line react/sort-comp
 
@@ -74,29 +69,29 @@ class FieldList extends Component {
     if (this.shouldScroll) animateScroll.scrollToBottom()
     const { fields } = this.props
 
+    if (fields.length === 0) {
+      return (
+        <Error>Form should contain at least one question</Error>
+      )
+    }
+
     return (
       <Table>
         <TableHead>
           <tr>
             <DragColumn />
-            <TitleColumn>Question title</TitleColumn>
-            <ChoicesColumn>Choices</ChoicesColumn>
+            <TitleColumn>Question content</TitleColumn>
             <RequiredColumn>Required?</RequiredColumn>
             <RemoveColumn />
           </tr>
         </TableHead>
-        <tbody>
-          {
-            fields.map((input, index) => (
-              <FieldEditor
-                key={input}
-                input={input}
-                index={index}
-                fields={fields}
-              />
-            ))
-          }
-        </tbody>
+        <TableBody
+          fields={fields}
+          onSortEnd={onSortEnd}
+          useWindowAsScrollContainer
+          helperClass="draggable-helper"
+          shouldCancelStart={shouldCancelStart}
+        />
       </Table>
     )
   }

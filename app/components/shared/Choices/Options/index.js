@@ -1,21 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
 import { withFieldAddHandler } from 'utils/form'
-import { buttonReset, COLORS } from 'styles'
+import { media, buttonReset, COLORS } from 'styles'
 import Item from './Item'
 
+const Container = styled.div`
+  ${media.upToPhone`
+    width: 100%;
+  `}
+`
 const AddOptionButton = styled.button`
   ${buttonReset}
-  font-size: 10px;
+  margin-top: 10px;
+  font-size: 14px;
   color: ${COLORS.HIGHLIGHTED_DISABLED};
 
   &:hover {
     color: ${COLORS.HIGHLIGHTED};
   }
 `
+const Error = styled.div`
+  width: 190px;
+  color: ${COLORS.ERROR};
+  font-size: 14px;
+`
 
-const Options = ({ fields, type, handleAddClick }) => (
-  <div>
+const Options = ({
+  fields,
+  type,
+  handleAddClick,
+  meta: { error },
+}) => (
+  <Container>
     {
       fields.map((input, index) => (
         <Item
@@ -27,10 +43,11 @@ const Options = ({ fields, type, handleAddClick }) => (
         />
       ))
     }
+    {error && <Error>Options {error}</Error>}
     <AddOptionButton onClick={handleAddClick}>
-      + Add Choice
+      + Add Option
     </AddOptionButton>
-  </div>
+  </Container>
 )
 
 export default withFieldAddHandler({ payload: '' })(Options)

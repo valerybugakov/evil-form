@@ -3,28 +3,35 @@ import styled from 'styled-components'
 import { arrayPush } from 'redux-form'
 import { compose, withHandlers } from 'recompose'
 import { dispatch } from 'redux/store'
-import { COLORS } from 'styles'
+import { media, COLORS } from 'styles'
 
 const Field = styled.button`
-  display: inline-block;
-  width: calc(50% - 10px);
-  height: 26.9px;
-  margin: 0 10px 18.3px 0;
+  width: 100%;
+  margin: 0 10px 18px 0;
+  padding: 8px 25px;
   cursor: pointer;
-  font-size: 10px;
   color: ${COLORS.SECONDARY};
   background-color: #ffffff;
-  border-radius: 4px;
-  border: solid 1px #f2f2f2;
+  border-radius: 5px;
+  border: 1px solid;
 
-  &:nth-child(2n) {
-    margin: 0 0 18.3px 10px;
-  }
+  color: ${COLORS.HIGHLIGHTED};
+  background-color: white;
+  border-color: ${COLORS.HIGHLIGHTED};
 
   &:hover {
-    color: ${COLORS.HIGHLIGHTED};
+    color: white;
+    background-color: ${COLORS.HIGHLIGHTED};
     border-color: ${COLORS.HIGHLIGHTED};
   }
+
+  ${media.upToMedium`
+    width: calc(50% - 10px);
+
+    &:nth-child(2n) {
+      margin: 0 0 18px 10px;
+    }
+  `}
 `
 
 const FieldItem = ({ label, handleClick }) => (

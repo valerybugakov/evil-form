@@ -8,7 +8,7 @@ import Builder from './Builder'
 
 const EditorContainer = styled.div`
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
 
   ${media.upToMedium`
     display: block;
@@ -23,8 +23,9 @@ const EditorContainer = styled.div`
 `
 const FixedSidebar = styled(Sidebar)`
   position: fixed;
-  width: 33.33%;
-  height: 100%;
+  display: flex;
+  width: 280px;
+  height: calc(100% - 64px);
 
   ${media.upToMedium`
     position: relative;

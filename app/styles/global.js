@@ -1,5 +1,6 @@
 import { injectGlobal } from 'styled-components'
 import { COLORS } from './theme'
+import { media } from './media'
 
 /* eslint no-unused-expressions: 0, max-len: 0 */
 injectGlobal`
@@ -13,12 +14,26 @@ injectGlobal`
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
+  a {
+    text-decoration: none;
+  }
+
+  input::placeholder {
+    color: ${COLORS.INACTIVE};
+  }
+
   #app {
     min-height: 100%;
     min-width: 100%;
+    font-size: 16px;
     color: ${COLORS.PRIMARY};
-    background-color: #fafafa;
+    background-color: #f1f3f6;
+
+    ${media.upToPhone`
+      font-size: 12px;
+    `}
   }
+
 `
 
 export * from './theme'

@@ -13,7 +13,6 @@ const Textarea = ({ className, meta, input = {}, css, ...rest }) => (
 export default styled(Textarea)`
   padding: 9px;
   color: #999999;
-  font-size: 10px;
   font-family: 'Helvetica Neue', Helvetica, 'Open Sans', sans-serif;
   border-radius: 4px;
   border: solid 1px #ccc;

@@ -8,6 +8,7 @@ export const COLORS = {
   INACTIVE: '#bfbfbf',
   BORDER: '#e5e5e5',
   REMOVE: '#ff8ca0',
+  ERROR: '#de3226',
 }
 
 export const screenSizes = {
@@ -20,22 +21,17 @@ export const screenSizes = {
 }
 
 export const actionButtonCSS = css`
-  width: 100px;
-  height: 26.9px;
-  color: #bec4ea;
+  width: 118px;
+  padding: 8px 0;
+  color: ${COLORS.HIGHLIGHTED};
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  font-size: 10px;
+  opacity: ${props => props.disabled ? '0.5' : '1'};
   border-radius: 4px;
-  background-color: #ffffff;
-  border: solid 1px #bec4ea;
+  border: 1px solid ${COLORS.HIGHLIGHTED};
+  background: white;
 
   &:hover {
-    color: #fff;
-    border-width: 0;
-    background-image: radial-gradient(
-      circle at 50% 51%,
-      #9aa5ec,
-      ${COLORS.HIGHLIGHTED}
-    );
+    color: white;
+    background: ${COLORS.HIGHLIGHTED};
   }
 `

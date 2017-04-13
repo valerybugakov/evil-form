@@ -1,54 +1,37 @@
 import React from 'react'
 import { Field } from 'redux-form'
 import styled from 'styled-components'
-import { withFieldRemoveHandler } from 'utils/form'
-import { media, COLORS } from 'styles'
+import { required, uniq, withFieldRemoveHandler } from 'utils/form'
+import { COLORS } from 'styles'
 import Textinput from 'components/shared/Textinput'
 
 const OptionContainer = styled.div`
   display: flex;
-  width: 85%;
-  min-height: 13px;
-  margin-bottom: 7px;
-
-  ${media.upToPhone`
-    width: auto;
-    flex-direction: row-reverse;
-  `}
+  align-items: center;
+  margin-bottom: 18px;
 `
 const TypeIndicator = styled.div`
-  width: 12px;
-  height: 12px;
-  margin-top: 1px;
-  margin-right: 5px;
+  min-width: 16px;
+  min-height: 16px;
+  margin-right: 8px;
   border: solid 1px ${COLORS.BORDER};
 
   ${props => props.fieldType === 'radio' && `
-    border-radius: 6px;
+    border-radius: 8px;
   `}
 
   ${props => props.fieldType === 'select' && `
-    height: 0;
-    margin-top: 6px;
+    min-height: 0;
     border-top-width: 0;
-  `}
-
-  ${media.upToPhone`
-    margin-right: 0;
   `}
 `
 const InputField = styled(Field)`
   display: flex;
   width: calc(100% - 17px);
 
-  & span {
+  & span:last-child {
     color: ${COLORS.INACTIVE};
   }
-
-  ${media.upToPhone`
-    margin-right: 8px;
-    flex-direction: row-reverse;
-  `}
 `
 
 const OptionItem = ({ input, type, handleRemoveClick }) => (
@@ -57,8 +40,10 @@ const OptionItem = ({ input, type, handleRemoveClick }) => (
     <InputField
       inEditMode
       name={input}
+      errorLabel="Option"
       component={Textinput}
       handleRemoveClick={handleRemoveClick}
+      validate={[required, uniq(input)]}
     />
   </OptionContainer>
 )

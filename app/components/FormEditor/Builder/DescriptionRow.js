@@ -1,27 +1,34 @@
 import React from 'react'
-import styled from 'styled-components'
-import { injectBuilderValues } from 'redux/utils'
+import { Field } from 'redux-form'
+import styled, { css } from 'styled-components'
 import { COLORS } from 'styles'
+import Textarea from 'components/shared/Textarea'
 
 const Container = styled.div`
   min-height: 36px;
-  margin-bottom: 21px;
   padding-bottom: 22.9px;
-  font-size: 9.9px;
-  border-bottom: 1px solid ${COLORS.BORDER};
 `
 const Label = styled.span`
+  font-size: 12px;
   margin-right: 2px;
   color: ${COLORS.INACTIVE};
 `
+const TextareaStyles = css`
+  width: 100%;
+  min-height: 90px;
+  margin-top: 8px;
+  color: ${COLORS.PRIMARY};
+`
 
-const DescriptionRow = ({ description }) => (
+const DescriptionRow = () => (
   <Container>
     <Label>DESCRIPTION:</Label>
-    {description}
+    <Field
+      name="description"
+      component={Textarea}
+      css={TextareaStyles}
+    />
   </Container>
 )
 
-export default injectBuilderValues({
-  description: 'description',
-})(DescriptionRow)
+export default DescriptionRow
