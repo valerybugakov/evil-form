@@ -4,12 +4,13 @@ import { injectBuilderValues } from 'redux/utils'
 import { media } from 'styles'
 
 const TitleField = styled(Field)`
-  width: 90%;
+  margin-bottom: 25px;
 
   ${media.upToPhone`
     display: flex;
-    width: 85%;
+    width: 100%;
     flex-direction: row-reverse;
+    margin-top: 15px;
 
     &:before {
       margin-left: 4px;

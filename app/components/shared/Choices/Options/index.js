@@ -1,9 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { withFieldAddHandler } from 'utils/form'
-import { buttonReset, COLORS } from 'styles'
+import { media, buttonReset, COLORS } from 'styles'
 import Item from './Item'
 
+const Container = styled.div`
+  ${media.upToPhone`
+    width: 100%;
+  `}
+`
 const AddOptionButton = styled.button`
   ${buttonReset}
   margin-top: 10px;
@@ -26,7 +31,7 @@ const Options = ({
   handleAddClick,
   meta: { error },
 }) => (
-  <div>
+  <Container>
     {
       fields.map((input, index) => (
         <Item
@@ -42,7 +47,7 @@ const Options = ({
     <AddOptionButton onClick={handleAddClick}>
       + Add Option
     </AddOptionButton>
-  </div>
+  </Container>
 )
 
 export default withFieldAddHandler({ payload: '' })(Options)

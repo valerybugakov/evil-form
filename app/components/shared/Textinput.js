@@ -22,11 +22,16 @@ const Input = styled.input`
   border-radius: 0;
   outline: none;
   appearance: none;
-  border-bottom: 1px solid;
-  border-color: ${props => props.error ? COLORS.ERROR : COLORS.BORDER};
-  transition: border-color 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  border-bottom: 1px solid ${props => props.error
+    ? COLORS.ERROR
+    : 'transparent'
+  };
 
-  &:focus {
+  ${InputWrapper}:hover & {
+    border-color: ${props => props.error ? COLORS.ERROR : COLORS.BORDER};
+  }
+
+  ${InputWrapper} &:focus {
     border-color: ${props => props.error ? COLORS.ERROR : COLORS.HIGHLIGHTED};
   }
 `

@@ -23,8 +23,9 @@ const EditorContainer = styled.div`
 `
 const FixedSidebar = styled(Sidebar)`
   position: fixed;
+  display: flex;
   width: 280px;
-  height: 100%;
+  height: calc(100% - 64px);
 
   ${media.upToMedium`
     position: relative;

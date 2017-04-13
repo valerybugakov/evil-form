@@ -35,17 +35,10 @@ const DragColumn = ColumnTitle.extend`
   width: 26px;
 `
 const TitleColumn = ColumnTitle.extend`
-  width: 65%;
-
-  ${media.upToSmall`
-    width: 45%;
-  `}
-`
-const ChoicesColumn = ColumnTitle.extend`
-  width: 35%;
+  width: 90%;
 `
 const RequiredColumn = ColumnTitle.extend`
-  width: 65px;
+  width: 70px;
 `
 const RemoveColumn = ColumnTitle.extend`
   width: 14px;
@@ -78,7 +71,7 @@ class FieldList extends Component {
 
     if (fields.length === 0) {
       return (
-        <Error>{'<-'} Form should contain at least one question</Error>
+        <Error>Form should contain at least one question</Error>
       )
     }
 
@@ -87,8 +80,7 @@ class FieldList extends Component {
         <TableHead>
           <tr>
             <DragColumn />
-            <TitleColumn>Question title</TitleColumn>
-            <ChoicesColumn>Preview</ChoicesColumn>
+            <TitleColumn>Question content</TitleColumn>
             <RequiredColumn>Required?</RequiredColumn>
             <RemoveColumn />
           </tr>

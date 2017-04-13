@@ -4,7 +4,7 @@ import { reduxForm, Field, FieldArray } from 'redux-form'
 import { promisifyAction } from 'redux/utils'
 import { saveForm } from 'redux/formBuilder/actions'
 import { required, hasItems } from 'utils/form'
-import { media, actionButtonCSS } from 'styles'
+import { media } from 'styles'
 import Textinput from 'components/shared/Textinput'
 import DescriptionRow from './DescriptionRow'
 import FieldList from './FieldList'
@@ -22,6 +22,8 @@ const FormContainer = styled.main`
 `
 const Form = styled.form`
   height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
   padding: 25px 40px 50px 45px;
   background: #fff;
 
@@ -30,18 +32,10 @@ const Form = styled.form`
   `}
 `
 const TitleField = styled(Field)`
-  width: calc(100% - 150px);
+  width: 100%;
   font-size: 18px;
   font-weight: normal;
-`
-const HeadingRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 21px;
-`
-const SaveButton = styled.button`
-  ${actionButtonCSS}
+  margin-bottom: 24px;
 `
 
 const preventSubmitOnEnter = e => {
@@ -50,27 +44,19 @@ const preventSubmitOnEnter = e => {
   }
 }
 
-const Builder = ({ handleSubmit, className, submitting, pristine, valid }) => (
+const Builder = ({ handleSubmit, className }) => (
   <FormContainer
     className={className}
     onKeyDown={preventSubmitOnEnter}
   >
     <Form onSubmit={handleSubmit}>
-      <HeadingRow>
-        <TitleField
-          name="title"
-          component={Textinput}
-          placeholder="Form Title"
-          errorLabel="Form Title"
-          validate={required}
-        />
-        <SaveButton
-          type="submit"
-          disabled={!valid || submitting || pristine}
-        >
-          Save form
-        </SaveButton>
-      </HeadingRow>
+      <TitleField
+        name="title"
+        component={Textinput}
+        placeholder="Form Title"
+        errorLabel="Form Title"
+        validate={required}
+      />
       <DescriptionRow />
       <FieldArray
         name="fields"

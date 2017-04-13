@@ -22,7 +22,7 @@ const Container = styled.header`
   `}
 `
 const Title = styled(Link)`
-  margin-right: 20px;
+  margin-right: 85px;
   padding: 0;
   font-size: 24px;
   font-weight: 600;
@@ -30,7 +30,6 @@ const Title = styled(Link)`
 
   ${media.upToPhone`
     display: none;
-
   `}
 `
 const StyledLink = styled(({ children, ...rest }) => (
@@ -38,7 +37,7 @@ const StyledLink = styled(({ children, ...rest }) => (
     {children}
   </NavLink>
 ))`
-  margin-right: 15px;
+  margin-right: 20px;
   padding-bottom: 2px;
   color: white;
 

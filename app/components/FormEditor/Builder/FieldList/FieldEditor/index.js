@@ -19,13 +19,16 @@ const TableRow = styled.tr`
   ${media.upToPhone`
     position: relative;
     display: block;
-    margin-bottom: 0.625em;
+    margin-bottom: 25px;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    padding: 15px 15px 0 15px;
   `}
 
   &.draggable-helper {
     pointer-events: auto !important;
     color: #4f4f4f;
     background-color: hsla(0, 0%, 100%, 0.8);
+    box-shadow: 2px 2px 4px -2px rgba(0, 0, 0, 0.2);
 
     ${media.upToPhone`
       font-size: 12px;
@@ -43,13 +46,14 @@ const TableCell = styled.td`
   ${media.upToPhone`
     display: flex;
     justify-content: space-between;
-    padding-bottom: 25px;
+    padding-bottom: 20px;
 
     &:before {
       display: block;
       content: attr(data-label);
       text-transform: uppercase;
       color: ${COLORS.INACTIVE};
+      align-self: flex-start;
     }
 
     &:first-child {
@@ -57,24 +61,20 @@ const TableCell = styled.td`
       bottom: -2px;
       transform: rotate(90deg);
     }
-
-    & input,
-    & > div:last-child {
-      text-align: right;
-    }
   `}
 `
 const TitleCell = TableCell.extend`
-  ${media.downToPhone`
-    .draggable-helper & {
-      width: 60%;
-    }
+  padding-right: 5%;
+
+  ${media.upToPhone`
+    flex-direction: column;
+    padding-right: 0;
+    align-items: flex-start;
   `}
-`
-const ChoicesCell = TableCell.extend`
+
   ${media.downToPhone`
     .draggable-helper & {
-      width: 25%;
+      width: 90%;
     }
   `}
 `
@@ -133,7 +133,7 @@ const FieldEditor = ({
           className="draggable"
         />
       </TableCell>
-      <TitleCell data-label="Title">
+      <TitleCell data-label="Question content">
         <TitleInput
           inputPath={input}
           errorLabel="Title"
@@ -142,13 +142,11 @@ const FieldEditor = ({
           placeholder="Question title"
           validate={[required, uniq(input, map(get('title')))]}
         />
-      </TitleCell>
-      <ChoicesCell data-label="Preview">
         <Choices
           input={input}
           type={fieldType}
         />
-      </ChoicesCell>
+      </TitleCell>
       <RequiredCell data-label="Required?">
         <RequiredField
           type="checkbox"
